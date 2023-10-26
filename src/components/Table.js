@@ -1,6 +1,10 @@
 import './Table.css'
 
-function Table({columns, shown, sorting, rowColoringLogic}) {
+function defaultCellFunc(item, col) {
+    return <td key={String(item[col]) + String(col)}>{item[col]}</td>
+}
+
+function Table({columns, shown, sorting, rowColoringLogic=((item) => {}), cellFunc=defaultCellFunc}) {
     return (
         <table className='itemTable'>
             <thead>
@@ -24,8 +28,8 @@ function Table({columns, shown, sorting, rowColoringLogic}) {
                 {shown.map((item, i) => {
                     return (
                         <tr key={i} style={rowColoringLogic(item)}>
-                            {columns.map(function (col) {
-                                return <td key={String(item[col]) + String(col)}>{item[col]}</td>
+                            {columns.map((col) => {
+                                return cellFunc(item, col)
                             })}
                         </tr>
                     )

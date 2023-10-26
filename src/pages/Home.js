@@ -12,7 +12,7 @@ function Home() {
                 <div>View Projects and Items</div>
             </div>
             <div className='navWrapper'>
-                <Link to='/'>
+                <Link to='/projects'>
                     <div className='navButtonWrapper'>
                         All Projects
                     </div>

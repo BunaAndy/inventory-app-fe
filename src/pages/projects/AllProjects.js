@@ -1,12 +1,12 @@
 import { React, useState } from "react"
 import './ProjectDisplay.css';
 import { api_url } from "../../resources/constants";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useRequest, Methods } from "../../util/QueryHandler"
 import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
 
-function ProjectDisplay() {
+function AllProjects() {
     // Setting up state and variables
     const location = useLocation();
     const [entries, setEntries] = useState([]);
@@ -23,61 +23,50 @@ function ProjectDisplay() {
     const [columns, setColumns] = useState([]);
     const [coloring, setColoring] = useState(false)
 
-    // Row coloring function
-    function rowColor(item) {
-        if (!coloring) {
-            return {}
-        }
-        if (item['Quantity'] >= item['Quantity Needed']) {
-            return {backgroundColor: "palegreen"}
-        } else {
-            return {backgroundColor: "palevioletred"}
-        }
-    }
-
     // On opening page, run query to populate state with project info
-    const projectQuery = useRequest(
-        String(api_url) + `/get_project_items?projectNumber=${projectNumber}`,
+    const projectsQuery = useRequest(
+        String(api_url) + `/get_projects`,
         undefined,
         Methods.Get,
-        ['items'],
-        // Data Population function, called in query handler
+        ['projects'],
+        // Data population function, called in query handler
         ((data) => {
             setEntries(data['entries']);
             setShown(data['entries'])
-
-            var projectTitle = data['projectNumber'] + " " + data['projectName']
-            if (projectTitle.includes("Inventory")) {
-                projectTitle = "Inventory"
-            }
-            setProjectName(projectTitle)
-
-            var cols = data['columns']
-            cols = cols.filter((col) => {return col !== 'Project'})
-            if (projectTitle === "Inventory") {
-                cols = cols.filter((col) => {return col !== 'Quantity Needed'})
-            }
-            setColumns(cols);
+            setProjectName(data['projectName'])
+            setColumns(data['columns']);
         })
     )
-    
+
+    function cellFunc(item, col) {
+        return (
+            <td key={String(item[col]) + String(col)} className="clickableCell">
+                <Link to={`/projects/${item['Project Number']}`}>
+                    <div style={{width: "100%", height: "100%"}}>
+                        {item[col]}
+                    </div>
+                </Link>
+            </td>
+        )
+    }
+
     // Rendering the page based on data
 
-    if(projectQuery.isLoading) {
+    if(projectsQuery.isLoading) {
         // If Loading:
         return (
             <div>
                 Loading
             </div>
         )
-    } else if (projectQuery.isError) {
+    } else if (projectsQuery.isError) {
         // If Error Occurred:
         return (
             <div>
-                {projectQuery.error.message}
+                {projectsQuery.error.message}
             </div>
         )
-    } else if (projectQuery.data !== undefined) {
+    } else if (projectsQuery.data !== undefined) {
         // If Successful:
         return (
             <div>
@@ -92,14 +81,10 @@ function ProjectDisplay() {
                     columns={columns}
                     shown={shown}
                     sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
-                    rowColoringLogic={rowColor}/>
-                {projectName !== "Inventory" ? (
-                    <><input type="checkbox" id="colors" checked={coloring} onChange={(event) => {setColoring(event.target.checked)}}/>
-                        <label htmlFor="colors">Show Colors?</label></>
-                ): <></>}
+                    cellFunc={cellFunc}/>
             </div>
         )
-    }    
+    }
 }
 
-export default ProjectDisplay
+export default AllProjects
