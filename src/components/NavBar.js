@@ -14,7 +14,7 @@ function Navbar() {
                     <Link to="/">Items</Link>
                 </div>
                 <div className='menuButton'>
-                    <Link to="/">Projects</Link>
+                    <Link to="/projects">Projects</Link>
                 </div>
             </div>
         </div>

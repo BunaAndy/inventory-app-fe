@@ -62,7 +62,6 @@ function ProjectDisplay() {
     )
     
     // Rendering the page based on data
-
     if(projectQuery.isLoading) {
         // If Loading:
         return (

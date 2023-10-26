@@ -51,7 +51,6 @@ function AllProjects() {
     }
 
     // Rendering the page based on data
-
     if(projectsQuery.isLoading) {
         // If Loading:
         return (
