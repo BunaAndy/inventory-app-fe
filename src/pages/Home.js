@@ -17,7 +17,7 @@ function Home() {
                         All Projects
                     </div>
                 </Link>
-                <Link to='/'>
+                <Link to='/items'>
                     <div className='navButtonWrapper'>
                         All Items
                     </div>
