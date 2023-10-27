@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import Navbar from './components/NavBar';
 import ProjectDisplay from './pages/projects/ProjectDisplay';
 import AllProjects from './pages/projects/AllProjects';
+import AllItems from './pages/items/AllItems';
 
 function App() {
     const queryClient = new QueryClient()
@@ -15,6 +16,7 @@ function App() {
                 <div className='pageWrapper'>
                     <Routes>
                         <Route index element={<Home />} />
+                        <Route path="items" element={<AllItems />} />
                         <Route path="projects" element={<AllProjects />} />
                         <Route path="projects/*" element={<ProjectDisplay />} />
                     </Routes>
