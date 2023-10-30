@@ -2,23 +2,25 @@ export const item_schema = {
     'type': 'object',
     'properties' : {
         'Barcode': {
-            'type' : 'string'
+            'type' : 'string',
         },
         'Name': {
-            'type' : 'string'
+            'type' : 'string',
         },
         'Quantity': {
-            'type' : 'integer'
+            'type' : 'integer',
+            'default' : 0
         },
         'Quantity Needed': {
-            'type' : 'integer'
+            'type' : 'integer',
+            'default' : 0
         },
         'Catalog': {
-            'type': 'string'
+            'type': 'string',
         }
     },
     'required': [
-        'Barcode', 'Name', 'Quantity', 'Quantity Needed', 'Catalog'
+        'Name', 'Quantity', 'Quantity Needed',
     ]
 }
 
@@ -29,12 +31,9 @@ export const items_schema = {
             'type' : 'array',
             'items' : item_schema,
         },
-        'Project' : {
-            'type' : 'string',
-        }
     },
     'required': [
-        'Entries', 'Project'
+        'Entries'
     ],
 }
 
@@ -42,7 +41,8 @@ export const inventory_schema = {
     'type': 'object',
     'properties' : {
         'Barcode': {
-            'type' : 'string'
+            'type' : 'string',
+            'default': ''
         },
         'Name': {
             'type' : 'string'
@@ -51,12 +51,26 @@ export const inventory_schema = {
             'type' : 'integer'
         },
         'Catalog': {
-            'type': 'string'
+            'type': 'string',
+            'default': ''
         }
     },
     'required': [
-        'Barcode', 'Name', 'Quantity', 'Catalog'
+        'Name', 'Quantity',
     ]
+}
+
+export const inventory_list_schema = {
+    'type': 'object',
+    'properties': {
+        'Entries' : {
+            'type' : 'array',
+            'items' : inventory_schema,
+        },
+    },
+    'required': [
+        'Entries'
+    ],
 }
 
 export const project_schema = {
