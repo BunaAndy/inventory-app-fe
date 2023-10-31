@@ -6,7 +6,7 @@ function Navbar() {
     return (
         <div className='navbarWrapper'>
             <div className="navbar">
-                <Link to='/'><img src={logo} className='logo'></img></Link>
+                <Link to='/'><img src={logo} className='logo' alt=''></img></Link>
                 <div className='menuButton'>
                     <Link to='/'>Home</Link>
                 </div>

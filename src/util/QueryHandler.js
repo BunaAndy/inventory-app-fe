@@ -16,7 +16,7 @@ export function useRequest(url, body, method, key, dataFunc) {
                     'Content-Type': 'application/json',
                 }
             }
-            if (method == "POST") {
+            if (method === "POST") {
                 requestData.body = body
             }
             return fetch(url, requestData)
@@ -41,7 +41,7 @@ export function useMutate(url, method, key, dataFunc) {
                 },
                 body: JSON.stringify(data)
             }
-            if (method == "POST") {
+            if (method === "POST") {
                 requestData.body = JSON.stringify(data)
             }
             console.log('req')

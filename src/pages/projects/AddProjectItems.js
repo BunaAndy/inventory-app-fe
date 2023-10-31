@@ -1,11 +1,10 @@
-import { React, useState, useEffect } from "react"
+import { React, useState } from "react"
 import Form from "@rjsf/core";
 import { customizeValidator } from "@rjsf/validator-ajv8";
 import { inventory_list_schema, items_schema } from "../../resources/schemas";
 import './AddProjectItems.css'
 import { api_url } from "../../resources/constants";
 import { useMutate, Methods, useRequest } from "../../util/QueryHandler";
-import { useQuery } from "react-query";
 
 function AddProjectItems({ projectNumber, projectName, changeAdding }) {
     const [itemList, setItemList] = useState([])

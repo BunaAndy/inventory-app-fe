@@ -1,14 +1,12 @@
 import { React, useState } from "react"
 import './AllItems.css';
 import { api_url } from "../../resources/constants";
-import { useLocation } from "react-router-dom";
 import { useRequest, Methods } from "../../util/QueryHandler"
 import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
 
 function AllItems() {
     // Setting up state and variables
-    const location = useLocation();
     const [entries, setEntries] = useState([]);
     const [shown, setShown] = useState([]);
     const [projectName, setProjectName] = useState('');
