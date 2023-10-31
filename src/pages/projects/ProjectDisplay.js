@@ -89,16 +89,18 @@ function ProjectDisplay() {
                 {projectQuery.error.message}
             </div>
         )
-    } else if (adding) {
-        return (
-            <div>
-                <AddProjectItems projectName={projectName} projectNumber={projectNumber} changeAdding={() => setAdding(false)}/>
-            </div>
-        )
     } else if (projectQuery.data !== undefined) {
         // If Successful:
         return (
             <div>
+                {
+                    adding ?
+                    <div>
+                        <AddProjectItems projectName={projectName} projectNumber={projectNumber} changeAdding={() => setAdding(false)}/>
+                        <div style={{'height': '70px', 'width': '100%'}}></div>
+                    </div> :
+                    <></>
+                }
                 <div className="tableTitle">
                     <div className="projectTitle">{projectName}</div>
                     <div className="searchWrapper">
@@ -113,6 +115,7 @@ function ProjectDisplay() {
                     rowColoringLogic={rowColor}/>
                 <button onClick={() => setAdding(true)}>Add Items</button>
                 {coloringEnable()}
+                <div style={{'height': '70px', 'width': '100%'}}></div>
             </div>
         )
     }    
