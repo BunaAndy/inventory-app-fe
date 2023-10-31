@@ -5,10 +5,12 @@ import { useLocation } from "react-router-dom";
 import { useRequest, Methods } from "../../util/QueryHandler"
 import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
+import AddProjectItems from "./AddProjectItems";
 
 function ProjectDisplay() {
     // Setting up state and variables
     const location = useLocation();
+    const [adding, setAdding] = useState(false)
     const [entries, setEntries] = useState([]);
     const [shown, setShown] = useState([]);
     const [projectName, setProjectName] = useState('');
@@ -32,6 +34,17 @@ function ProjectDisplay() {
             return {backgroundColor: "palegreen"}
         } else {
             return {backgroundColor: "palevioletred"}
+        }
+    }
+
+    function coloringEnable() {
+        if (projectName !== "Inventory") {
+            return (<>
+                <input type="checkbox" id="colors" checked={coloring} onChange={(event) => {setColoring(event.target.checked)}}/>
+                <label htmlFor="colors">Show Colors?</label>
+            </>)
+        } else {
+            return <></>
         }
     }
 
@@ -80,6 +93,14 @@ function ProjectDisplay() {
         // If Successful:
         return (
             <div>
+                {
+                    adding ?
+                    <div>
+                        <AddProjectItems projectName={projectName} projectNumber={projectNumber} changeAdding={() => setAdding(false)}/>
+                        <div style={{'height': '70px', 'width': '100%'}}></div>
+                    </div> :
+                    <></>
+                }
                 <div className="tableTitle">
                     <div className="projectTitle">{projectName}</div>
                     <div className="searchWrapper">
@@ -92,10 +113,9 @@ function ProjectDisplay() {
                     shown={shown}
                     sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
                     rowColoringLogic={rowColor}/>
-                {projectName !== "Inventory" ? (
-                    <><input type="checkbox" id="colors" checked={coloring} onChange={(event) => {setColoring(event.target.checked)}}/>
-                        <label htmlFor="colors">Show Colors?</label></>
-                ): <></>}
+                <button onClick={() => setAdding(true)}>Add Items</button>
+                {coloringEnable()}
+                <div style={{'height': '70px', 'width': '100%'}}></div>
             </div>
         )
     }    
