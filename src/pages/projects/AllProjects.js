@@ -1,14 +1,15 @@
 import { React, useState } from "react"
 import './AllProjects.css';
 import { api_url } from "../../resources/constants";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useRequest, Methods } from "../../util/QueryHandler"
 import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
+import AddProject from "./AddProject";
 
 function AllProjects() {
     // Setting up state and variables
-    const location = useLocation();
+    const [adding, setAdding] = useState(false)
     const [entries, setEntries] = useState([]);
     const [shown, setShown] = useState([]);
     const [projectName, setProjectName] = useState('');
@@ -72,6 +73,10 @@ function AllProjects() {
                     shown={shown}
                     sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
                     cellFunc={cellFunc}/>
+                <button onClick={() => setAdding(true)}>Add Project</button>
+                <div style={{'height': '70px', 'width': '100%'}}></div>
+                {adding ? <AddProject changeAdding={setAdding} refreshProjects={projectsQuery.refetch}/> : <></>}
+                <div style={{'height': '70px', 'width': '100%'}}></div>
             </div>
         )
     }
