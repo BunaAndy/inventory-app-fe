@@ -23,15 +23,13 @@ export const sortList = (shown, setShown, entries, setEntries, col, desc) => {
 }
 
 // Filtering Function
-export function filterList(entries, setShown, string) {
+export function filterList(entries, setShown, string, cols) {
     var newShown = entries.slice().filter((item) => {
         var found = false
-        var itemData = Object.values(item)
-        for (let i = 0; i < itemData.length; i++) {
-            console.log(itemData)
-            var hasString = itemData[i].toString().toLowerCase().includes(string.toLowerCase())
+        cols.foreach((col) => {
+            var hasString = item[col].toString().toLowerCase().includes(string.toLowerCase())
             found = found || hasString
-        }
+        })
         return found
     })
     setShown(newShown)
