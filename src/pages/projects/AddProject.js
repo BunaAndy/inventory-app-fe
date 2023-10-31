@@ -41,7 +41,7 @@ function AddProject({ changeAdding, refreshProjects }) {
         )
     } else {
         return (
-            <div className="add-items-wrapper">
+            <div className="add-project-wrapper">
                 <Form schema={project_schema} validator={validator} onSubmit={onSubmit} />
             </div>
         )
