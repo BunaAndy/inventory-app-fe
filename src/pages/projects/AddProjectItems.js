@@ -55,6 +55,9 @@ function AddProjectItems({ projectNumber, projectName, changeAdding }) {
                     element[col] = ''
                 }   
             }
+            if (element['Quantity Needed'] === undefined) {
+                element['Quantity Needed'] = 0
+            }
         });
         console.log(formData)
         addItems.mutate(formData)
