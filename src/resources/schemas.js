@@ -17,6 +17,7 @@ export const item_schema = {
         },
         'Catalog': {
             'type': 'string',
+            'default' : ''
         }
     },
     'required': [

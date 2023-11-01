@@ -75,7 +75,7 @@ function AllProjects() {
                     cellFunc={cellFunc}/>
                 <button onClick={() => setAdding(true)}>Add Project</button>
                 <div style={{'height': '70px', 'width': '100%'}}></div>
-                {adding ? <AddProject changeAdding={setAdding} refreshProjects={projectsQuery.refetch}/> : <></>}
+                {adding ? <AddProject changeAdding={() => {setAdding(false);projectsQuery.refetch()}}/> : <></>}
                 <div style={{'height': '70px', 'width': '100%'}}></div>
             </div>
         )

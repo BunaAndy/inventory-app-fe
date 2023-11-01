@@ -4,7 +4,11 @@ function defaultCellFunc(item, col) {
     return <td key={String(item[col]) + String(col)}>{item[col]}</td>
 }
 
-function Table({columns, shown, sorting, rowColoringLogic=((item) => {}), cellFunc=defaultCellFunc}) {
+function defaultSorting(col, bool) {
+    return
+}
+
+function Table({columns, shown, sorting={defaultSorting}, rowColoringLogic=((item) => {}), cellFunc=defaultCellFunc}) {
     return (
         <table className='itemTable'>
             <thead>
