@@ -9,7 +9,7 @@ function ModifyItems({ entries, columns, editting, editCols, url}) {
     const [deleted, setDeleted] = useState([])
 
     const modifyItems = useMutate(
-        String(api_url) + `/modify_ ` + url,
+        String(api_url) + '/modify_' + url,
         Methods.Post,
         ['items_modified'],
         // Data population function, called in query handler
@@ -20,7 +20,7 @@ function ModifyItems({ entries, columns, editting, editCols, url}) {
     )
 
     const deleteItems = useMutate(
-        String(api_url) + `/delete_` + url,
+        String(api_url) + '/delete_' + url,
         Methods.Post,
         ['items_deleted'],
         // Data population function, called in query handler
@@ -31,7 +31,10 @@ function ModifyItems({ entries, columns, editting, editCols, url}) {
 
     function updateChanged(value, item, col, index) {
         var changedCopy = { ...changed }
-        var itemCopy = { ...item }
+        var itemCopy = {...item}
+        if (changedCopy[index]) {
+            itemCopy = changedCopy[index]
+        }
         var newVal = value
         if(editCols[col] === 'number') {
             newVal = Number(value)
@@ -58,7 +61,7 @@ function ModifyItems({ entries, columns, editting, editCols, url}) {
                         <div className="delete-wrapper">
                             <input type={editCols[col]}
                                 defaultValue={item[col]}
-                                onChange={(event) => {updateChanged(event.target.value, item, col, index)}} 
+                                onChange={(event) => {event.preventDefault();updateChanged(event.target.value, item, col, index)}} 
                                 className="input-box"></input>
                         </div>
                     </td>
