@@ -32,8 +32,8 @@ function AddProjectItems({ projectNumber, changeAdding }) {
         })
     )
 
-    const modifyItems = useMutate(
-        String(api_url) + `/modify_project_items?projectNumber=${projectNumber}`,
+    const incrementItems = useMutate(
+        String(api_url) + `/increment_project_items?projectNumber=${projectNumber}`,
         Methods.Post,
         ['items'],
         // Data population function, called in query handler
@@ -60,23 +60,23 @@ function AddProjectItems({ projectNumber, changeAdding }) {
             }
         });
         console.log(formData)
+        incrementItems.mutate(formData)
         addItems.mutate(formData)
-        modifyItems.mutate(formData)
         changeAdding()
     }
 
-    if(modifyItems.isLoading || addItems.isLoading) {
+    if(incrementItems.isLoading || addItems.isLoading) {
         // If Loading:
         return (
             <div>
                 Loading
             </div>
         )
-    } else if (modifyItems.isError || addItems.isError) {
+    } else if (incrementItems.isError || addItems.isError) {
         // If Error Occurred:
         return (
             <div>
-                {modifyItems.isError ? modifyItems.error.message : addItems.error.message}
+                {incrementItems.isError ? incrementItems.error.message : addItems.error.message}
             </div>
         )
     } else {
