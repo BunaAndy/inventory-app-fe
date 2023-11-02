@@ -1,6 +1,6 @@
 import './Table.css'
 
-function defaultCellFunc(item, col) {
+function defaultCellFunc(item, col, index) {
     return <td key={String(item[col]) + String(col)}>{item[col]}</td>
 }
 
@@ -33,7 +33,7 @@ function Table({columns, shown, sorting={defaultSorting}, rowColoringLogic=((ite
                     return (
                         <tr key={i} style={rowColoringLogic(item)}>
                             {columns.map((col) => {
-                                return cellFunc(item, col)
+                                return cellFunc(item, col, i)
                             })}
                         </tr>
                     )

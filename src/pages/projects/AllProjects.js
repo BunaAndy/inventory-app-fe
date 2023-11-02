@@ -30,7 +30,7 @@ function AllProjects() {
         })
     )
 
-    function cellFunc(item, col) {
+    function cellFunc(item, col, index) {
         return (
             <td key={String(item[col]) + String(col)} className="clickableCell">
                 <Link to={`/projects/${item['Project Number']}`}>

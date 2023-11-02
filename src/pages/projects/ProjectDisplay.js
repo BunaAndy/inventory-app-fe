@@ -98,15 +98,25 @@ function ProjectDisplay() {
                 {
                     adding ?
                     <div>
-                        <AddProjectItems projectName={projectName} projectNumber={projectNumber} changeAdding={() => {setAdding(false);projectQuery.refetch()}}/>
+                        <div className="projectTitle">{projectName}</div>
+                        <AddProjectItems
+                            projectName={projectName}
+                            projectNumber={projectNumber}
+                            changeAdding={() => {setAdding(false);projectQuery.refetch()}}/>
                         <div style={{'height': '70px', 'width': '100%'}}></div>
                     </div> :
                     <></>
                 }
                 {
                     editting ?
-                    <div>{/*{ entries, columns, editting,  projectNumber, projectName }*/}
-                        <ModifyItems entries={entries} columns={columns} projectName={projectName} projectNumber={projectNumber} editting={() => {setEditting(false);projectQuery.refetch()}}/>
+                    <div>
+                        <div className="projectTitle">{projectName}</div>
+                        <ModifyItems
+                            entries={entries}
+                            columns={columns}
+                            editting={() => {setEditting(false);projectQuery.refetch()}}
+                            editCols={{'Quantity': 'number', 'Quantity Needed': 'number'}}
+                            url={`project_items?projectNumber=${projectNumber}`}/>
                         <div style={{'height': '70px', 'width': '100%'}}></div>
                     </div> :
                     <></>

@@ -6,7 +6,7 @@ import './AddProjectItems.css'
 import { api_url } from "../../resources/constants";
 import { useMutate, Methods, useRequest } from "../../util/QueryHandler";
 
-function AddProjectItems({ projectNumber, projectName, changeAdding }) {
+function AddProjectItems({ projectNumber, changeAdding }) {
     const [itemList, setItemList] = useState([])
     const validator = customizeValidator()
     const [scanned, setScanned] = useState('')
@@ -82,8 +82,7 @@ function AddProjectItems({ projectNumber, projectName, changeAdding }) {
     } else {
         return (
             <div className="add-items-wrapper">
-                <div className="projectTitle">{projectName}</div>
-                <Form schema={projectName === 'Inventory' ? inventory_list_schema : items_schema} 
+                <Form schema={projectNumber === 'Inventory' ? inventory_list_schema : items_schema} 
                     validator={validator}
                     onSubmit={onSubmit}
                     formData={{ 'Entries': itemList }}

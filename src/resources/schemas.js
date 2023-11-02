@@ -46,10 +46,13 @@ export const inventory_schema = {
             'default': ''
         },
         'Name': {
-            'type' : 'string'
+            'type' : 'string',
+            'default': ''
         },
         'Quantity': {
-            'type' : 'integer'
+            'type' : 'integer',
+            'default' : 0
+            
         },
         'Catalog': {
             'type': 'string',
@@ -92,7 +95,7 @@ export const project_schema = {
 export const projects_schema = {
     'type': 'object',
     'properties': {
-        'Projects' : {
+        'Entries' : {
             'type' : 'array',
             'items' : project_schema,
         }

@@ -4,13 +4,12 @@ import { useMutate, Methods } from "../../util/QueryHandler";
 import Table from "../../components/Table";
 import { api_url } from "../../resources/constants";
 
-function ModifyItems({ entries, columns, editting,  projectNumber, projectName }) {
-    const [originalItems, setOriginalItems] = useState(entries)
+function ModifyItems({ entries, columns, editting, editCols, url}) {
     const [changed, setChanged] = useState({})
     const [deleted, setDeleted] = useState([])
 
     const modifyItems = useMutate(
-        String(api_url) + `/modify_project_items?projectNumber=${projectNumber}`,
+        String(api_url) + `/modify_ ` + url,
         Methods.Post,
         ['items_modified'],
         // Data population function, called in query handler
@@ -21,7 +20,7 @@ function ModifyItems({ entries, columns, editting,  projectNumber, projectName }
     )
 
     const deleteItems = useMutate(
-        String(api_url) + `/delete_project_items?projectNumber=${projectNumber}`,
+        String(api_url) + `/delete_` + url,
         Methods.Post,
         ['items_deleted'],
         // Data population function, called in query handler
@@ -30,11 +29,15 @@ function ModifyItems({ entries, columns, editting,  projectNumber, projectName }
         })
     )
 
-    function updateChanged(value, item, col) {
+    function updateChanged(value, item, col, index) {
         var changedCopy = { ...changed }
         var itemCopy = { ...item }
-        itemCopy[col] = value
-        changedCopy[item['Name']] = itemCopy
+        var newVal = value
+        if(editCols[col] === 'number') {
+            newVal = Number(value)
+        }
+        itemCopy[col] = newVal
+        changedCopy[index] = itemCopy
         setChanged(changedCopy)
     }
 
@@ -47,28 +50,27 @@ function ModifyItems({ entries, columns, editting,  projectNumber, projectName }
         }
     }
 
-    function cellFunc(item, col) {
+    function cellFunc(item, col, index) {
         if (!deleted.includes(item)) {
-            switch(col) {
-                case "Quantity Needed":
-                case "Quantity":
-                    return (
-                        <td key={String(item[col]) + String(col)}>
-                            <div className="delete-wrapper">
-                                <input type="number" defaultValue={item[col]} onChange={(event) => {updateChanged(event.target.value, item, col)}} className="input-box"></input>
-                            </div>
-                        </td>
-                    )
-                case "Delete":
-                    return (
-                        <td key={String(item[col]) + String(col)}>
-                            <div className="delete-wrapper">
-                                <button onClick={() => {setDeleted(deleted.concat([item]))}}>Delete</button>
-                            </div>
-                        </td>
-                    )
-                default:
-                    return <td key={String(item[col]) + String(col)}>{item[col]}</td>
+            if(Object.keys(editCols).includes(col)) {
+                return (
+                    <td key={String(item[col]) + String(col)}>
+                        <div className="delete-wrapper">
+                            <input type={editCols[col]}
+                                defaultValue={item[col]}
+                                onChange={(event) => {updateChanged(event.target.value, item, col, index)}} 
+                                className="input-box"></input>
+                        </div>
+                    </td>
+                )
+            } else if (col === 'Delete') {
+                return (
+                    <td key={String(item[col]) + String(col)}>
+                        <div className="delete-wrapper">
+                            <button onClick={() => {setDeleted(deleted.concat([item]))}}>Delete</button>
+                        </div>
+                    </td>
+                )
             }
         } else if (col === "Delete") {
             return (
@@ -77,9 +79,8 @@ function ModifyItems({ entries, columns, editting,  projectNumber, projectName }
                         <button onClick={() => {setDeleted(deleted.filter((i) => {return i !== item}))}}>Undo</button>
                     </div>
                 </td>)
-        } else {
-            return <td key={String(item[col]) + String(col)}>{item[col]}</td>
         }
+        return <td key={String(item[col]) + String(col)}>{item[col]}</td>
     }
 
     // Rendering the page based on data
@@ -95,7 +96,6 @@ function ModifyItems({ entries, columns, editting,  projectNumber, projectName }
         return (
             <div>
                 <div className="add-items-wrapper">
-                    <div className="projectTitle">{projectName}</div>
                     <Table
                         columns={columns.concat(["Delete"])}
                         shown={entries}
