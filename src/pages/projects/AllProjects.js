@@ -6,10 +6,12 @@ import { useRequest, Methods } from "../../util/QueryHandler"
 import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
 import AddProject from "./AddProject";
+import ModifyItems from "../items/ModifyItems";
 
 function AllProjects() {
     // Setting up state and variables
     const [adding, setAdding] = useState(false)
+    const [editting, setEditting] = useState(false)
     const [entries, setEntries] = useState([]);
     const [shown, setShown] = useState([]);
     const [projectName, setProjectName] = useState('');
@@ -61,6 +63,22 @@ function AllProjects() {
         // If Successful:
         return (
             <div>
+                {adding ? <><AddProject changeAdding={() => {setAdding(false);projectsQuery.refetch()}}/>
+                            <div style={{'height': '70px', 'width': '100%'}}></div></> : <></>}
+                {
+                    editting ?
+                    <div>
+                        <div className="projectTitle">{projectName}</div>
+                        <ModifyItems
+                            entries={entries.filter((proj) => {return !(proj['Project Name'] === 'Inventory')})}
+                            columns={columns}
+                            editting={() => {setEditting(false);projectsQuery.refetch()}}
+                            editCols={{'Project Name': 'string'}}
+                            url={'projects'}/>
+                        <div style={{'height': '70px', 'width': '100%'}}></div>
+                    </div> :
+                    <></>
+                }
                 <div className="tableTitle">
                     <div className="projectTitle">{projectName}</div>
                     <div className="searchWrapper">
@@ -73,9 +91,12 @@ function AllProjects() {
                     shown={shown}
                     sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
                     cellFunc={cellFunc}/>
-                <button onClick={() => setAdding(true)}>Add Project</button>
-                <div style={{'height': '70px', 'width': '100%'}}></div>
-                {adding ? <AddProject changeAdding={() => {setAdding(false);projectsQuery.refetch()}}/> : <></>}
+                {(adding || editting) ? 
+                <></> : 
+                <>
+                    <button onClick={() => setAdding(true)}>Add Projects</button>
+                    <button onClick={() => setEditting(true)}>Edit Projects</button>
+                </>}
                 <div style={{'height': '70px', 'width': '100%'}}></div>
             </div>
         )
