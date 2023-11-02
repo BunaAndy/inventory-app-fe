@@ -4,6 +4,7 @@ import { api_url } from "../../resources/constants";
 import { useRequest, Methods } from "../../util/QueryHandler"
 import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
+import ModifyItems from "./ModifyItems";
 
 function AllItems() {
     // Setting up state and variables
@@ -11,6 +12,7 @@ function AllItems() {
     const [shown, setShown] = useState([]);
     const [projectName, setProjectName] = useState('');
     const [columns, setColumns] = useState([]);
+    const [editting, setEditting] = useState(false)
 
     // On opening page, run query to populate state with project info
     const itemsQuery = useRequest(
@@ -46,6 +48,20 @@ function AllItems() {
         // If Successful:
         return (
             <div>
+                {
+                    editting ?
+                    <div>
+                        <div className="projectTitle">{projectName}</div>
+                        <ModifyItems
+                            entries={entries}
+                            columns={columns}
+                            editting={() => {setEditting(false);itemsQuery.refetch()}}
+                            editCols={{'Barcode': 'string', 'Catalog': 'string'}}
+                            url={'all_items'}/>
+                        <div style={{'height': '70px', 'width': '100%'}}></div>
+                    </div> :
+                    <></>
+                }
                 <div className="tableTitle">
                     <div className="projectTitle">{projectName}</div>
                     <div className="searchWrapper">
@@ -57,6 +73,11 @@ function AllItems() {
                     columns={columns}
                     shown={shown}
                     sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}/>
+                {(editting) ? 
+                <></> : 
+                <>
+                    <button onClick={() => setEditting(true)}>Edit Items</button>
+                </>}
             </div>
         )
     }
