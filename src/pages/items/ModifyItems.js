@@ -37,7 +37,7 @@ function ModifyItems({ entries, columns, editting, editCols, url}) {
             newVal = Number(value)
         }
         itemCopy[col] = newVal
-        changedCopy[index] = itemCopy
+        changedCopy[index] = [entries[index], itemCopy]
         setChanged(changedCopy)
     }
 
@@ -67,7 +67,7 @@ function ModifyItems({ entries, columns, editting, editCols, url}) {
                 return (
                     <td key={String(item[col]) + String(col)}>
                         <div className="delete-wrapper">
-                            <button onClick={() => {setDeleted(deleted.concat([item]))}}>Delete</button>
+                            <button onClick={() => {setDeleted(deleted.concat([entries[index]]))}}>Delete</button>
                         </div>
                     </td>
                 )
@@ -76,7 +76,7 @@ function ModifyItems({ entries, columns, editting, editCols, url}) {
             return (
                 <td key={String(item[col]) + String(col)}>
                     <div className="delete-wrapper">
-                        <button onClick={() => {setDeleted(deleted.filter((i) => {return i !== item}))}}>Undo</button>
+                        <button onClick={() => {setDeleted(deleted.filter((i) => {return i !== entries[index]}))}}>Undo</button>
                     </div>
                 </td>)
         }
