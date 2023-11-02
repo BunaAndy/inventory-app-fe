@@ -6,7 +6,7 @@ import { api_url } from "../../resources/constants";
 import { useMutate, Methods } from "../../util/QueryHandler";
 import { project_schema } from "../../resources/schemas";
 
-function AddProject({ changeAdding, refreshProjects }) {
+function AddProject({ changeAdding }) {
     const validator = customizeValidator()
     const addProject = useMutate(
         String(api_url) + `/add_project`,
@@ -15,8 +15,7 @@ function AddProject({ changeAdding, refreshProjects }) {
         // Data population function, called in query handler
         ((data) => {
             console.log(data)
-            changeAdding(false)
-            refreshProjects()
+            changeAdding()
         })
     )
 

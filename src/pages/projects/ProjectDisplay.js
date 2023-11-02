@@ -6,11 +6,13 @@ import { useRequest, Methods } from "../../util/QueryHandler"
 import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
 import AddProjectItems from "./AddProjectItems";
+import ModifyItems from "../items/ModifyItems";
 
 function ProjectDisplay() {
     // Setting up state and variables
     const location = useLocation();
     const [adding, setAdding] = useState(false)
+    const [editting, setEditting] = useState(false)
     const [entries, setEntries] = useState([]);
     const [shown, setShown] = useState([]);
     const [projectName, setProjectName] = useState('');
@@ -96,7 +98,25 @@ function ProjectDisplay() {
                 {
                     adding ?
                     <div>
-                        <AddProjectItems projectName={projectName} projectNumber={projectNumber} changeAdding={() => setAdding(false)}/>
+                        <div className="projectTitle">{projectName}</div>
+                        <AddProjectItems
+                            projectName={projectName}
+                            projectNumber={projectNumber}
+                            changeAdding={() => {setAdding(false);projectQuery.refetch()}}/>
+                        <div style={{'height': '70px', 'width': '100%'}}></div>
+                    </div> :
+                    <></>
+                }
+                {
+                    editting ?
+                    <div>
+                        <div className="projectTitle">{projectName}</div>
+                        <ModifyItems
+                            entries={entries}
+                            columns={columns}
+                            editting={() => {setEditting(false);projectQuery.refetch()}}
+                            editCols={{'Quantity': 'number', 'Quantity Needed': 'number'}}
+                            url={`project_items?projectNumber=${projectNumber}`}/>
                         <div style={{'height': '70px', 'width': '100%'}}></div>
                     </div> :
                     <></>
@@ -113,7 +133,12 @@ function ProjectDisplay() {
                     shown={shown}
                     sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
                     rowColoringLogic={rowColor}/>
-                <button onClick={() => setAdding(true)}>Add Items</button>
+                {(adding || editting) ? 
+                <></> : 
+                <>
+                    <button onClick={() => setAdding(true)}>Add Items</button>
+                    <button onClick={() => setEditting(true)}>Edit Items</button>
+                </>}
                 {coloringEnable()}
                 <div style={{'height': '70px', 'width': '100%'}}></div>
             </div>

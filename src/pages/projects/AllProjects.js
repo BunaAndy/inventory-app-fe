@@ -30,7 +30,7 @@ function AllProjects() {
         })
     )
 
-    function cellFunc(item, col) {
+    function cellFunc(item, col, index) {
         return (
             <td key={String(item[col]) + String(col)} className="clickableCell">
                 <Link to={`/projects/${item['Project Number']}`}>
@@ -75,7 +75,7 @@ function AllProjects() {
                     cellFunc={cellFunc}/>
                 <button onClick={() => setAdding(true)}>Add Project</button>
                 <div style={{'height': '70px', 'width': '100%'}}></div>
-                {adding ? <AddProject changeAdding={setAdding} refreshProjects={projectsQuery.refetch}/> : <></>}
+                {adding ? <AddProject changeAdding={() => {setAdding(false);projectsQuery.refetch()}}/> : <></>}
                 <div style={{'height': '70px', 'width': '100%'}}></div>
             </div>
         )
