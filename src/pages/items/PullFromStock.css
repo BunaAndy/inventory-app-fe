@@ -1,0 +1,9 @@
+.delete-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.input-box {
+    max-width: 90%;
+}
