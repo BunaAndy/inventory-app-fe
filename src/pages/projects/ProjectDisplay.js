@@ -7,12 +7,14 @@ import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
 import AddProjectItems from "./AddProjectItems";
 import ModifyItems from "../items/ModifyItems";
+import PullFromStock from "../items/PullFromStock";
 
 function ProjectDisplay() {
     // Setting up state and variables
     const location = useLocation();
     const [adding, setAdding] = useState(false)
     const [editting, setEditting] = useState(false)
+    const [pulling, setPulling] = useState(false)
     const [entries, setEntries] = useState([]);
     const [shown, setShown] = useState([]);
     const [projectName, setProjectName] = useState('');
@@ -121,6 +123,19 @@ function ProjectDisplay() {
                     </div> :
                     <></>
                 }
+                {
+                    pulling ?
+                    <div>
+                        <div className="projectTitle">{projectName}</div>
+                        <PullFromStock
+                            entries={entries}
+                            columns={columns}
+                            pulling={() => {setPulling(false);projectQuery.refetch()}}
+                            projectNumber={projectNumber}/>
+                        <div style={{'height': '70px', 'width': '100%'}}></div>
+                    </div> :
+                    <></>
+                }
                 <div className="tableTitle">
                     <div className="projectTitle">{projectName}</div>
                     <div className="searchWrapper">
@@ -133,12 +148,16 @@ function ProjectDisplay() {
                     shown={shown}
                     sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
                     rowColoringLogic={rowColor}/>
-                {(adding || editting) ? 
+                {(adding || editting || pulling) ? 
                 <></> : 
                 <>
                     <button onClick={() => setAdding(true)}>Add Items</button>
                     <button onClick={() => setEditting(true)}>Edit Items</button>
                 </>}
+                {((adding || editting || pulling || projectNumber === "Inventory")) ?
+                    <></> :
+                    <button onClick={() => setPulling(true)}>Pull from Stock</button>
+                }
                 {coloringEnable()}
                 <div style={{'height': '70px', 'width': '100%'}}></div>
             </div>
