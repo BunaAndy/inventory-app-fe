@@ -7,6 +7,7 @@ import ProjectDisplay from './pages/projects/ProjectDisplay';
 import AllProjects from './pages/projects/AllProjects';
 import AllItems from './pages/items/AllItems';
 import AddProjectItems from './pages/projects/AddProjectItems';
+import {Login} from './pages/Login';
 
 function App() {
     const queryClient = new QueryClient()
@@ -21,6 +22,7 @@ function App() {
                         <Route path="add_project_items" element={<AddProjectItems />} />
                         <Route path="projects" element={<AllProjects />} />
                         <Route path="projects/*" element={<ProjectDisplay />} />
+                        <Route path="login" element={<Login />} />
                     </Routes>
                 </div>
             </BrowserRouter>

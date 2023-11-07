@@ -8,9 +8,11 @@ import { filterList, sortList } from "../../util/ListFunctions";
 import AddProjectItems from "./AddProjectItems";
 import ModifyItems from "../items/ModifyItems";
 import PullFromStock from "../items/PullFromStock";
+import { useLogin } from "../Login";
 
 function ProjectDisplay() {
     // Setting up state and variables
+    const checkLogin = useLogin()
     const location = useLocation();
     const [adding, setAdding] = useState(false)
     const [editting, setEditting] = useState(false)
@@ -151,12 +153,12 @@ function ProjectDisplay() {
                 {(adding || editting || pulling) ? 
                 <></> : 
                 <>
-                    <button onClick={() => setAdding(true)}>Add Items</button>
-                    <button onClick={() => setEditting(true)}>Edit Items</button>
+                    <button onClick={() => {checkLogin(); setAdding(true)}}>Add Items</button>
+                    <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Items</button>
                 </>}
                 {((adding || editting || pulling || projectNumber === "Inventory")) ?
                     <></> :
-                    <button onClick={() => setPulling(true)}>Pull from Stock</button>
+                    <button onClick={() => {checkLogin(); setPulling(true)}}>Pull from Stock</button>
                 }
                 {coloringEnable()}
                 <div style={{'height': '70px', 'width': '100%'}}></div>

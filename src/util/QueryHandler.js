@@ -1,4 +1,7 @@
 import { useQuery, useMutation } from "react-query";
+import useToken from "../components/useToken";
+import { useNavigate } from "react-router-dom";
+import { Logout } from "../pages/Login";
 
 export const Methods = Object.freeze({
 	Get: "GET",
@@ -6,6 +9,19 @@ export const Methods = Object.freeze({
 })
 
 export function useRequest(url, body, method, key, dataFunc) {
+    const navigate = useNavigate()
+    function errorCatch(response) {
+        var res = response
+        if (!res.ok) {
+            if (res.status === 401) {
+                // Call error here
+                navigate('/login')
+            }
+            return res.json().then((err) => {throw new Error(String(err['error']) + ". " + String(err['message']))})
+        }
+        return res.json()
+    }
+    
     const query = useQuery({
         queryKey: key,
         queryFn: () => {
@@ -29,23 +45,38 @@ export function useRequest(url, body, method, key, dataFunc) {
 }
 
 export function useMutate(url, method, key, dataFunc) {
+    const navigate = useNavigate()
+    function errorCatch(response) {
+        var res = response
+        if (!res.ok) {
+            if (res.status === 401) {
+                // Call error here
+                navigate('/login')
+            } else if (res.status === 401) {
+                // Call error here
+                Logout()
+                navigate('/login')
+            }
+            return res.json().then((err) => {throw new Error(String(err['error']) + ". " + String(err['message']))})
+        }
+        return res.json()
+    }
+    
+    const {token} = useToken()
     const mutation = useMutation({
         mutationKey: key,
         mutationFn: (data) => {
-            console.log('here')
-            console.log(data)
             var requestData = {
                 method: method,
                 headers: {
                     'Content-Type': 'application/json',
+                    "Authorization": token
                 },
                 body: JSON.stringify(data)
             }
             if (method === "POST") {
                 requestData.body = JSON.stringify(data)
             }
-            console.log('req')
-            console.log(requestData)
             return fetch(url, requestData)
                 .then((res) => {return errorCatch(res)})
                 .then((data) => {dataFunc(data); return data})
@@ -54,12 +85,4 @@ export function useMutate(url, method, key, dataFunc) {
         staleTime: Infinity
     })
     return mutation
-}
-
-function errorCatch(response) {
-    var res = response
-    if (!res.ok) {
-        return res.json().then((err) => {throw new Error(String(err['error']) + ". " + String(err['message']))})
-    }
-    return res.json()
 }
