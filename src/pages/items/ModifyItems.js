@@ -39,6 +39,9 @@ function ModifyItems({ entries, columns, editting, editCols, url}) {
         if(editCols[col] === 'number') {
             newVal = Number(value)
         }
+        if(editCols[col] === 'string') {
+            newVal = String(value)
+        }
         itemCopy[col] = newVal
         changedCopy[index] = itemCopy
         setChanged(changedCopy)
