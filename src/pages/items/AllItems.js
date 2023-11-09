@@ -66,7 +66,7 @@ function AllItems() {
                         <div className="projectTitle">{projectName}</div>
                         <div className="searchWrapper">
                             Search:
-                            <input name="myInput" className="searchBox" onChange={(event) => {filterList(entries, setShown, event.target.value)}}/>
+                            <input name="myInput" className="searchBox" onChange={(event) => {filterList(entries, setShown, event.target.value, columns)}}/>
                         </div>
                     </div>
                 }
