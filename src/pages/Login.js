@@ -24,10 +24,13 @@ export function Login() {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        loginQuery.mutate({'Username': username, 'Password': password})
-        window.location.reload(true);
-        console.log(window.history)
-        navigate(-1)
+        await loginQuery.mutate({'Username': username, 'Password': password})
+        console.log(loginQuery.isError)
+        if (!loginQuery.isError) {
+            window.location.reload(true);
+            console.log(window.history)
+            navigate(-1)
+        }
     }
 
     return (
@@ -38,17 +41,19 @@ export function Login() {
                 <form onSubmit={handleSubmit}>
                     <label>
                         <p>Username</p>
-                        <input type="text" onChange={e => setUserName(e.target.value)} />
+                        <input type="text" onChange={e => setUserName(e.target.value)} required/>
                     </label>
                     <label>
                         <p>Password</p>
-                        <input type="password" onChange={e => setPassword(e.target.value)} />
+                        <input type="password" onChange={e => setPassword(e.target.value)} required/>
                     </label>
                     <div>
                         <button type="submit">Submit</button>
                     </div>
                 </form>
             </div>
+            <div style={{'height': '70px', 'width': '100%'}}></div>
+            {loginQuery.isError ? <div>{loginQuery.error.message}</div> : <></>}
         </div>
     )
 }

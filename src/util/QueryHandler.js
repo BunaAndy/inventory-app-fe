@@ -48,7 +48,10 @@ export function useMutate(url, method, key, dataFunc) {
     const navigate = useNavigate()
     function errorCatch(response) {
         var res = response
+        var json = res.json()
         if (!res.ok) {
+            console.log(String(json['error']))
+            console.log(String(json['message']))
             if (res.status === 401) {
                 // Call error here
                 navigate('/login')
@@ -57,9 +60,9 @@ export function useMutate(url, method, key, dataFunc) {
                 Logout()
                 navigate('/login')
             }
-            return res.json().then((err) => {throw new Error(String(err['error']) + ". " + String(err['message']))})
+            return json.then((err) => {throw new Error(String(err['error']) + ". " + String(err['message']))})
         }
-        return res.json()
+        return json
     }
     
     const {token} = useToken()
