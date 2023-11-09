@@ -26,7 +26,7 @@ export const sortList = (shown, setShown, entries, setEntries, col, desc) => {
 export function filterList(entries, setShown, string, cols) {
     var newShown = entries.slice().filter((item) => {
         var found = false
-        cols.foreach((col) => {
+        cols.forEach((col) => {
             var hasString = item[col].toString().toLowerCase().includes(string.toLowerCase())
             found = found || hasString
         })
