@@ -65,6 +65,27 @@ function AllProjects() {
         // If Successful:
         return (
             <div>
+                <div className="tableTitle">
+                    <div className="projectTitle">{projectName}</div>
+                    {(adding || editting) ? 
+                        <></> : 
+                        <div className="searchWrapper">
+                            Search:
+                        <input name="myInput" className="searchBox" onChange={(event) => {filterList(entries, setShown, event.target.value)}}/>
+                    </div>}
+                </div>
+                <Table
+                    columns={columns}
+                    shown={shown}
+                    sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
+                    cellFunc={cellFunc}/>
+                {(adding || editting) ? 
+                <></> : 
+                <>
+                    <button onClick={() => {checkLogin(); setAdding(true)}}>Add Projects</button>
+                    <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Projects</button>
+                </>}
+                <div style={{'height': '70px', 'width': '100%'}}></div>
                 {adding ? <><AddProject changeAdding={() => {setAdding(false);projectsQuery.refetch()}}/>
                             <div style={{'height': '70px', 'width': '100%'}}></div></> : <></>}
                 {
@@ -81,25 +102,6 @@ function AllProjects() {
                     </div> :
                     <></>
                 }
-                <div className="tableTitle">
-                    <div className="projectTitle">{projectName}</div>
-                    <div className="searchWrapper">
-                        Search:
-                        <input name="myInput" className="searchBox" onChange={(event) => {filterList(entries, setShown, event.target.value)}}/>
-                    </div>
-                </div>
-                <Table
-                    columns={columns}
-                    shown={shown}
-                    sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
-                    cellFunc={cellFunc}/>
-                {(adding || editting) ? 
-                <></> : 
-                <>
-                    <button onClick={() => {checkLogin(); setAdding(true)}}>Add Projects</button>
-                    <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Projects</button>
-                </>}
-                <div style={{'height': '70px', 'width': '100%'}}></div>
             </div>
         )
     }

@@ -99,6 +99,32 @@ function ProjectDisplay() {
         // If Successful:
         return (
             <div>
+                <div className="tableTitle">
+                    <div className="projectTitle">{projectName}</div>
+                    {(adding || editting || pulling) ? 
+                        <></> : 
+                        <div className="searchWrapper">
+                            Search:
+                        <input name="myInput" className="searchBox" onChange={(event) => {filterList(entries, setShown, event.target.value)}}/>
+                    </div>}
+                </div>
+                <Table
+                    columns={columns}
+                    shown={shown}
+                    sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
+                    rowColoringLogic={rowColor}/>
+                {(adding || editting || pulling) ? 
+                <></> : 
+                <>
+                    <button onClick={() => {checkLogin(); setAdding(true)}}>Add Items</button>
+                    <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Items</button>
+                </>}
+                {((adding || editting || pulling || projectNumber === "Inventory")) ?
+                    <></> :
+                    <button onClick={() => {checkLogin(); setPulling(true)}}>Pull from Stock</button>
+                }
+                {coloringEnable()}
+                <div style={{'height': '70px', 'width': '100%'}}></div>
                 {
                     adding ?
                     <div>
@@ -138,30 +164,6 @@ function ProjectDisplay() {
                     </div> :
                     <></>
                 }
-                <div className="tableTitle">
-                    <div className="projectTitle">{projectName}</div>
-                    <div className="searchWrapper">
-                        Search:
-                        <input name="myInput" className="searchBox" onChange={(event) => {filterList(entries, setShown, event.target.value)}}/>
-                    </div>
-                </div>
-                <Table
-                    columns={columns}
-                    shown={shown}
-                    sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
-                    rowColoringLogic={rowColor}/>
-                {(adding || editting || pulling) ? 
-                <></> : 
-                <>
-                    <button onClick={() => {checkLogin(); setAdding(true)}}>Add Items</button>
-                    <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Items</button>
-                </>}
-                {((adding || editting || pulling || projectNumber === "Inventory")) ?
-                    <></> :
-                    <button onClick={() => {checkLogin(); setPulling(true)}}>Pull from Stock</button>
-                }
-                {coloringEnable()}
-                <div style={{'height': '70px', 'width': '100%'}}></div>
             </div>
         )
     }    
