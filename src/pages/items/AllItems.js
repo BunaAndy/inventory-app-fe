@@ -5,9 +5,11 @@ import { useRequest, Methods } from "../../util/QueryHandler"
 import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
 import ModifyItems from "./ModifyItems";
+import { useLogin } from "../Login";
 
 function AllItems() {
     // Setting up state and variables
+    const checkLogin = useLogin()
     const [entries, setEntries] = useState([]);
     const [shown, setShown] = useState([]);
     const [projectName, setProjectName] = useState('');
@@ -60,15 +62,14 @@ function AllItems() {
                             url={'all_items'}/>
                         <div style={{'height': '70px', 'width': '100%'}}></div>
                     </div> :
-                    <></>
-                }
-                <div className="tableTitle">
-                    <div className="projectTitle">{projectName}</div>
-                    <div className="searchWrapper">
-                        Search:
-                        <input name="myInput" className="searchBox" onChange={(event) => {filterList(entries, setShown, event.target.value)}}/>
+                    <div className="tableTitle">
+                        <div className="projectTitle">{projectName}</div>
+                        <div className="searchWrapper">
+                            Search:
+                            <input name="myInput" className="searchBox" onChange={(event) => {filterList(entries, setShown, event.target.value)}}/>
+                        </div>
                     </div>
-                </div>
+                }
                 <Table
                     columns={columns}
                     shown={shown}
@@ -76,7 +77,7 @@ function AllItems() {
                 {(editting) ? 
                 <></> : 
                 <>
-                    <button onClick={() => setEditting(true)}>Edit Items</button>
+                    <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Items</button>
                 </>}
             </div>
         )
