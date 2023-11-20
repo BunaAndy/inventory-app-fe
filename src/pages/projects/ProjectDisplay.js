@@ -96,77 +96,83 @@ function ProjectDisplay() {
             </div>
         )
     } else if (projectQuery.data !== undefined) {
-        // If Successful:
-        return (
-            <div>
-                <div className="tableTitle">
-                    <div className="projectTitle">{projectName}</div>
-                    {(adding || editting || pulling) ? 
-                        <></> : 
-                        <div className="searchWrapper">
-                            Search:
-                        <input name="myInput" className="searchBox" 
-                        onChange={(event) => {filterList(entries, setShown, event.target.value, columns)}}/>
-                    </div>}
+        // If successful
+        if (adding) {
+            return (
+                <div>
+                    <div style={{'height': '10px', 'width': '100%'}}/>
+                    <div className="tableTitle">
+                        <div className="projectTitle">{projectName}</div>
+                    </div>
+                    <AddProjectItems
+                        projectName={projectName}
+                        projectNumber={projectNumber}
+                        changeAdding={() => {setAdding(false);projectQuery.refetch()}}/>
+                    <div style={{'height': '70px', 'width': '100%'}}></div>
                 </div>
-                <Table
-                    columns={columns}
-                    shown={shown}
-                    sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
-                    rowColoringLogic={rowColor}/>
-                {(adding || editting || pulling) ? 
-                <></> : 
-                <>
-                    <button onClick={() => {checkLogin(); setAdding(true)}}>Add Items</button>
-                    <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Items</button>
-                </>}
-                {((adding || editting || pulling || projectNumber === "Inventory")) ?
-                    <></> :
-                    <button onClick={() => {checkLogin(); setPulling(true)}}>Pull from Stock</button>
-                }
-                {coloringEnable()}
-                <div style={{'height': '70px', 'width': '100%'}}></div>
-                {
-                    adding ?
-                    <div>
+            )
+        } else if (editting) {
+            return (
+                <div>
+                    <div style={{'height': '10px', 'width': '100%'}}/>
+                    <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
-                        <AddProjectItems
-                            projectName={projectName}
-                            projectNumber={projectNumber}
-                            changeAdding={() => {setAdding(false);projectQuery.refetch()}}/>
-                        <div style={{'height': '70px', 'width': '100%'}}></div>
-                    </div> :
-                    <></>
-                }
-                {
-                    editting ?
-                    <div>
+                    </div>
+                    <ModifyItems
+                        entries={entries}
+                        columns={columns}
+                        editting={() => {setEditting(false);projectQuery.refetch()}}
+                        editCols={{'Quantity': 'number', 'Quantity Needed': 'number'}}
+                        url={`project_items?projectNumber=${projectNumber}`}/>
+                    <div style={{'height': '70px', 'width': '100%'}}></div>
+                </div>
+            )
+        } else if (pulling) {
+            return (
+                <div>
+                    <div style={{'height': '10px', 'width': '100%'}}/>
+                    <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
-                        <ModifyItems
-                            entries={entries}
-                            columns={columns}
-                            editting={() => {setEditting(false);projectQuery.refetch()}}
-                            editCols={{'Quantity': 'number', 'Quantity Needed': 'number'}}
-                            url={`project_items?projectNumber=${projectNumber}`}/>
-                        <div style={{'height': '70px', 'width': '100%'}}></div>
-                    </div> :
-                    <></>
-                }
-                {
-                    pulling ?
-                    <div>
+                    </div>
+                    <PullFromStock
+                        entries={entries}
+                        columns={columns}
+                        pulling={() => {setPulling(false);projectQuery.refetch()}}
+                        projectNumber={projectNumber}/>
+                    <div style={{'height': '70px', 'width': '100%'}}></div>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <div style={{'height': '10px', 'width': '100%'}}/>
+                    <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
-                        <PullFromStock
-                            entries={entries}
-                            columns={columns}
-                            pulling={() => {setPulling(false);projectQuery.refetch()}}
-                            projectNumber={projectNumber}/>
-                        <div style={{'height': '70px', 'width': '100%'}}></div>
-                    </div> :
-                    <></>
-                }
-            </div>
-        )
+                        {(adding || editting || pulling) ? 
+                            <></> : 
+                            <div className="searchWrapper">
+                                Search:
+                            <input name="myInput" className="searchBox" 
+                            onChange={(event) => {filterList(entries, setShown, event.target.value, columns)}}/>
+                        </div>}
+                    </div>
+                    <div>
+                        <button onClick={() => {checkLogin(); setAdding(true)}}>Add Items</button>
+                        <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Items</button>
+                        {(projectNumber === "Inventory") ? <></> :
+                        <button onClick={() => {checkLogin(); setPulling(true)}}>Pull from Stock</button>}
+                        {coloringEnable()}
+                    </div>
+                    <div style={{'height': '5px', 'width': '100%'}}/>
+                    <Table
+                        columns={columns}
+                        shown={shown}
+                        sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
+                        rowColoringLogic={rowColor}/>
+                    <div style={{'height': '70px', 'width': '100%'}}></div>
+                </div>
+            )
+        }
     }    
 }
 

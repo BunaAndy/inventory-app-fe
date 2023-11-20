@@ -17,7 +17,9 @@ function Table({columns, shown, sorting={defaultSorting}, rowColoringLogic=((ite
                         return (
                             <th key={column}>
                                 <div className='headerWrapper'>
-                                    {column}
+                                    <div className='columnName'>
+                                        {column}
+                                    </div>
                                     <div className='buttonWrapper'>
                                         <button className='upArrow' onClick={() => { sorting(column, false) }} />
                                         <button className='downArrow' onClick={() => { sorting(column, true) }} />
