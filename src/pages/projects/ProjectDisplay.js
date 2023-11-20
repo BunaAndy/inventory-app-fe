@@ -9,6 +9,7 @@ import AddProjectItems from "./AddProjectItems";
 import ModifyItems from "../items/ModifyItems";
 import PullFromStock from "../items/PullFromStock";
 import { useLogin } from "../Login";
+import ExcelViewer from "../../components/ExcelViewer";
 
 function ProjectDisplay() {
     // Setting up state and variables
@@ -169,7 +170,8 @@ function ProjectDisplay() {
                         shown={shown}
                         sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
                         rowColoringLogic={rowColor}/>
-                    <div style={{'height': '70px', 'width': '100%'}}></div>
+                    <div style={{'height': '150px', 'width': '100%'}}></div>
+                    <ExcelViewer/>
                 </div>
             )
         }
