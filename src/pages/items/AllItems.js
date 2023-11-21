@@ -48,20 +48,26 @@ function AllItems() {
         )
     } else if (itemsQuery.data !== undefined) {
         // If Successful:
-        return (
-            <div>
-                {
-                    editting ?
-                    <div>
+        if (editting) {
+            return (
+                <div>
+                    <div style={{'height': '10px', 'width': '100%'}}/>
+                    <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
-                        <ModifyItems
-                            entries={entries}
-                            columns={columns}
-                            editting={() => {setEditting(false);itemsQuery.refetch()}}
-                            editCols={{'Barcode': 'string', 'Catalog': 'string'}}
-                            url={'all_items'}/>
-                        <div style={{'height': '70px', 'width': '100%'}}></div>
-                    </div> :
+                    </div>
+                    <ModifyItems
+                        entries={entries}
+                        columns={columns}
+                        editting={() => {setEditting(false);itemsQuery.refetch()}}
+                        editCols={{'Barcode': 'string', 'Catalog': 'string'}}
+                        url={'all_items'}/>
+                    <div style={{'height': '70px', 'width': '100%'}}></div>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <div style={{'height': '10px', 'width': '100%'}}/>
                     <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
                         <div className="searchWrapper">
@@ -69,18 +75,15 @@ function AllItems() {
                             <input name="myInput" className="searchBox" onChange={(event) => {filterList(entries, setShown, event.target.value, columns)}}/>
                         </div>
                     </div>
-                }
-                <Table
-                    columns={columns}
-                    shown={shown}
-                    sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}/>
-                {(editting) ? 
-                <></> : 
-                <>
                     <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Items</button>
-                </>}
-            </div>
-        )
+                    <div style={{'height': '5px', 'width': '100%'}}/>
+                    <Table
+                        columns={columns}
+                        shown={shown}
+                        sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}/>
+                </div>
+            )
+        }
     }
 }
 
