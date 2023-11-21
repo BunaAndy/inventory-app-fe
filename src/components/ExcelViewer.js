@@ -32,6 +32,8 @@ function ExcelViewer() {
     return (
         <div>
             <span>
+                <div>Upload Excel file for viewing:</div>
+                <div style={{'height': '10px', 'width': '100%'}}></div>
                 <input type="file"
                     name="myFile"
                     onChange={(event) => uploadFile(event)}

@@ -10,6 +10,7 @@ import ModifyItems from "../items/ModifyItems";
 import PullFromStock from "../items/PullFromStock";
 import { useLogin } from "../Login";
 import ExcelViewer from "../../components/ExcelViewer";
+import ExportCSV from "../../components/ExportCSV";
 
 function ProjectDisplay() {
     // Setting up state and variables
@@ -157,12 +158,17 @@ function ProjectDisplay() {
                             onChange={(event) => {filterList(entries, setShown, event.target.value, columns)}}/>
                         </div>}
                     </div>
-                    <div>
-                        <button onClick={() => {checkLogin(); setAdding(true)}}>Add Items</button>
-                        <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Items</button>
-                        {(projectNumber === "Inventory") ? <></> :
-                        <button onClick={() => {checkLogin(); setPulling(true)}}>Pull from Stock</button>}
-                        {coloringEnable()}
+                    <div className="tableButtons">
+                        <div className="edittingButtons">
+                            <button onClick={() => {checkLogin(); setAdding(true)}}>Add Items</button>
+                            <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Items</button>
+                            {(projectNumber === "Inventory") ? <></> :
+                            <button onClick={() => {checkLogin(); setPulling(true)}}>Pull from Stock</button>}
+                            {coloringEnable()}
+                        </div>
+                        <div className="exportButtons">
+                            <ExportCSV entries={entries} columns={columns} tableName={projectName}></ExportCSV>
+                        </div>
                     </div>
                     <div style={{'height': '5px', 'width': '100%'}}/>
                     <Table
@@ -170,7 +176,7 @@ function ProjectDisplay() {
                         shown={shown}
                         sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
                         rowColoringLogic={rowColor}/>
-                    <div style={{'height': '150px', 'width': '100%'}}></div>
+                    <div style={{'height': '50px', 'width': '100%'}}></div>
                     <ExcelViewer/>
                 </div>
             )

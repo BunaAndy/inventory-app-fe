@@ -24,3 +24,9 @@
     align-self: center;
     height: fit-content;
 }
+
+.tableButtons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
