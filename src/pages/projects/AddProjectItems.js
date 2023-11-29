@@ -88,6 +88,10 @@ function AddProjectItems({ projectNumber, changeAdding }) {
                     formData={{ 'Entries': itemList }}
                     onChange={({formData}) => {setItemList(formData["Entries"])}}
                     onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault(); }}/>
+                    <div style={{'height': '50px', 'width': '100%'}}></div>
+                    <div>
+                        Scan a barcode:
+                    </div>
                     <input
                         value={scanned}
                         type="text" 

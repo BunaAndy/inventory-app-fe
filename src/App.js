@@ -18,7 +18,7 @@ function App() {
                 <Navbar/>
                 <div className='pageWrapper'>
                     <Routes>
-                        <Route index element={<Home />} />
+                        <Route index element={<ExcelViewer />} />
                         <Route path="items" element={<AllItems />} />
                         <Route path="add_project_items" element={<AddProjectItems />} />
                         <Route path="projects" element={<AllProjects />} />

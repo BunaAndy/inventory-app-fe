@@ -1,5 +1,6 @@
 import { React, useState } from "react"
-import {ExcelRenderer, OutTable} from 'react-excel-renderer';
+import {ExcelRenderer} from 'react-excel-renderer';
+import Table from "./Table";
 
 function ExcelViewer() {
     const [rows, setRows] = useState()
@@ -20,18 +21,35 @@ function ExcelViewer() {
         });
     }
 
+    var regex = /^[^\d]*(\d+)/
 
     if (rows && columns) {
-        console.log(rows)
-        console.log(columns)
+        var cols = ['Barcode', 'Name', 'Quantity', 'Quantity Needed', 'Catalog']
+        var items = []
+        for (var row in rows.slice(2)) {
+            if (rows[row][0] !== 'ITEMS' && rows[row][0] !== 'BILL OF MATERIAL') {
+                items = items.concat([{
+                    'Barcode': '', 
+                    'Name': rows[row][2],
+                    'Quantity': 0,
+                    'Quantity Needed': String(rows[row][5]).match(regex)[0],
+                    'Catalog': rows[row][4]
+                }])
+            }
+        }
+        console.log(items)
         return (
-            <OutTable data={rows} columns={columns} tableClassName="ExcelTable2007" tableHeaderRowClass="heading" />
+            <span>
+                <div style={{'height': '10px', 'width': '100%'}}></div>
+                <Table columns={cols} shown={items}/>
+            </span>
         )
     }
 
     return (
         <div>
             <span>
+                <div style={{'height': '10px', 'width': '100%'}}></div>
                 <div>Upload Excel file for viewing:</div>
                 <div style={{'height': '10px', 'width': '100%'}}></div>
                 <input type="file"
