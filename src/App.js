@@ -8,7 +8,6 @@ import AllProjects from './pages/projects/AllProjects';
 import AllItems from './pages/items/AllItems';
 import AddProjectItems from './pages/projects/AddProjectItems';
 import {Login} from './pages/Login';
-import ExcelViewer from './components/ExcelViewer';
 
 function App() {
     const queryClient = new QueryClient()
@@ -18,7 +17,7 @@ function App() {
                 <Navbar/>
                 <div className='pageWrapper'>
                     <Routes>
-                        <Route index element={<ExcelViewer />} />
+                        <Route index element={<Home />} />
                         <Route path="items" element={<AllItems />} />
                         <Route path="add_project_items" element={<AddProjectItems />} />
                         <Route path="projects" element={<AllProjects />} />
