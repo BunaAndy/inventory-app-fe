@@ -26,7 +26,7 @@ function ExcelViewer() {
     if (rows && columns) {
         var cols = ['Barcode', 'Name', 'Quantity', 'Quantity Needed', 'Catalog']
         var items = []
-        for (var row in rows.slice(2)) {
+        for (var row in rows) {
             if (rows[row][0] !== 'ITEMS' && rows[row][0] !== 'BILL OF MATERIAL') {
                 items = items.concat([{
                     'Barcode': '', 

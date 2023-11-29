@@ -23,7 +23,7 @@ function BOMImporter({ projectNumber, refresh}) {
             else {
                 var rs = resp.rows
                 var items = []
-                for (var row in rs.slice(2)) {
+                for (var row in rs) {
                     if (rs[row][0] !== 'ITEMS' && rs[row][0] !== 'BILL OF MATERIAL') {
                         items = items.concat([{
                             'Barcode': '', 
@@ -36,18 +36,18 @@ function BOMImporter({ projectNumber, refresh}) {
                     }
                 }
                 items.forEach(element => {
+                    if (element['Quantity Needed'] === undefined) {
+                        element['Quantity Needed'] = 0
+                    }
                     for (var col in element) {
                         if(element[col] === undefined) {
                             element[col] = ''
                         }   
                     }
-                    if (element['Quantity Needed'] === undefined) {
-                        element['Quantity Needed'] = 0
-                    }
                 });
                 var data = {'Entries': items}
                 uploadBOM.mutate(data)
-                refresh()
+                window.location.reload(false);
             }
         });
     }
