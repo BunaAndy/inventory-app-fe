@@ -9,8 +9,8 @@ import AddProjectItems from "./AddProjectItems";
 import ModifyItems from "../items/ModifyItems";
 import PullFromStock from "../items/PullFromStock";
 import { useLogin } from "../Login";
-import ExcelViewer from "../../components/ExcelViewer";
 import ExportCSV from "../../components/ExportCSV";
+import BOMImporter from "../../components/BOMImporter";
 
 function ProjectDisplay() {
     // Setting up state and variables
@@ -30,6 +30,7 @@ function ProjectDisplay() {
             }
             return ''
         }).apply());
+    const [BOM, setBOM] = useState()
     const [columns, setColumns] = useState([]);
     const [coloring, setColoring] = useState(false)
 
@@ -66,6 +67,7 @@ function ProjectDisplay() {
         ((data) => {
             setEntries(data['entries']);
             setShown(data['entries'])
+            setBOM(data['bom'])
 
             var projectTitle = data['projectNumber'] + " " + data['projectName']
             if (projectTitle.includes("Inventory")) {
@@ -177,7 +179,7 @@ function ProjectDisplay() {
                         sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
                         rowColoringLogic={rowColor}/>
                     <div style={{'height': '50px', 'width': '100%'}}></div>
-                    <ExcelViewer/>
+                    {BOM ? <></> : <BOMImporter projectNumber={projectNumber} refresh={() => {projectQuery.refetch()}}/>}
                 </div>
             )
         }

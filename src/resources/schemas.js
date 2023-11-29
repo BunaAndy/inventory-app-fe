@@ -18,6 +18,10 @@ export const item_schema = {
         'Catalog': {
             'type': 'string',
             'default' : ''
+        },
+        'Manufacturer': {
+            'type': 'string',
+            'default' : ''
         }
     },
     'required': [
@@ -52,11 +56,14 @@ export const inventory_schema = {
         'Quantity': {
             'type' : 'integer',
             'default' : 0
-            
         },
         'Catalog': {
             'type': 'string',
             'default': ''
+        },
+        'Manufacturer': {
+            'type': 'string',
+            'default' : ''
         }
     },
     'required': [

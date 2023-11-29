@@ -8,7 +8,6 @@ import AllProjects from './pages/projects/AllProjects';
 import AllItems from './pages/items/AllItems';
 import AddProjectItems from './pages/projects/AddProjectItems';
 import {Login} from './pages/Login';
-import ExcelViewer from './components/ExcelViewer';
 
 function App() {
     const queryClient = new QueryClient()
