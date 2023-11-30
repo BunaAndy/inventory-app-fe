@@ -24,7 +24,8 @@ function BOMImporter({ projectNumber, refresh}) {
                 var rs = resp.rows
                 var items = []
                 for (var row in rs) {
-                    if (rs[row][0] !== 'ITEMS' && rs[row][0] !== 'BILL OF MATERIAL') {
+                    if (rs[row].length > 3 && rs[row][0] !== 'ITEMS' && rs[row][0] !== 'BILL OF MATERIAL') {
+                        console.log(String(rs[row][5]).match(regex))
                         items = items.concat([{
                             'Barcode': '', 
                             'Name': String(rs[row][2]),
