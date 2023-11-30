@@ -9,7 +9,7 @@ import { useMutate, Methods, useRequest } from "../../util/QueryHandler";
 function AddProjectItems({ projectNumber, changeAdding }) {
     const [itemList, setItemList] = useState([])
     const validator = customizeValidator()
-    const [scanned, setScanned] = useState('#&$%')
+    const [scanned, setScanned] = useState('$')
     const getBarcode = useRequest(
         String(api_url) + `/get_item?barcode=${scanned}&projectNumber=${projectNumber}`,
         undefined,
@@ -17,7 +17,9 @@ function AddProjectItems({ projectNumber, changeAdding }) {
         ['item'],
         // Data population function, called in query handler
         ((data) => {
-            setItemList(itemList.concat(data['entries']))
+            if (scanned !== '') {
+                setItemList(itemList.concat(data['entries']))
+            }
             setScanned('')
         })
     )
