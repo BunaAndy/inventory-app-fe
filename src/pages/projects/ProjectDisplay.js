@@ -105,6 +105,8 @@ function ProjectDisplay() {
             return (
                 <div>
                     <div style={{'height': '10px', 'width': '100%'}}/>
+                    <button onClick={setAdding(false)}>Back</button>
+                    <div style={{'height': '70px', 'width': '100%'}}/>
                     <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
                     </div>
@@ -119,12 +121,14 @@ function ProjectDisplay() {
             return (
                 <div>
                     <div style={{'height': '10px', 'width': '100%'}}/>
+                    <button onClick={setEditting(false)}>Back</button>
+                    <div style={{'height': '70px', 'width': '100%'}}/>
                     <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
                     </div>
                     <ModifyItems
                         entries={entries}
-                        columns={columns}
+                        columns={columns.concat(["Delete"])}
                         editting={() => {setEditting(false);projectQuery.refetch()}}
                         editCols={{'Quantity': 'number', 'Quantity Needed': 'number'}}
                         url={`project_items?projectNumber=${projectNumber}`}/>

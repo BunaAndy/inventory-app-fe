@@ -75,3 +75,11 @@ export function useLogin() {
     }
     return checkLogin
 }
+
+export function useLoggedIn() {
+    const {token} = useToken()
+    const checkToken = () => {
+        return Boolean(token)
+    }
+    return checkToken
+}

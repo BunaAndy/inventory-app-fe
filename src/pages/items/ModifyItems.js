@@ -3,10 +3,12 @@ import './ModifyItems.css'
 import { useMutate, Methods } from "../../util/QueryHandler";
 import Table from "../../components/Table";
 import { api_url } from "../../resources/constants";
+import { useLoggedIn } from "../Login";
 
 function ModifyItems({ entries, columns, editting, editCols, url}) {
     const [changed, setChanged] = useState({})
     const [deleted, setDeleted] = useState([])
+    const loggedIn = useLoggedIn()
 
     const modifyItems = useMutate(
         String(api_url) + '/modify_' + url,
@@ -69,16 +71,34 @@ function ModifyItems({ entries, columns, editting, editCols, url}) {
                         </div>
                     </td>
                 )
-            } else if (col === 'Delete') {
+            } else if (col === "Delete") {
                 return (
                     <td key={String(item[col]) + String(col)}>
                         <div className="delete-wrapper">
-                            <button onClick={() => {setDeleted(deleted.concat([item]))}}>Delete</button>
+                            <button onClick={() => {setDeleted(deleted.concat([item]))}}>{col}</button>
                         </div>
                     </td>
                 )
+            } else if (col === "Archive") {
+                if (loggedIn()) {
+                    return (
+                        <td key={String(item[col]) + String(col)}>
+                            <div className="delete-wrapper">
+                                <button onClick={() => {setDeleted(deleted.concat([item]))}}>{col}</button>
+                            </div>
+                        </td>
+                    )
+                } else {
+                    return (
+                        <td key={String(item[col]) + String(col)}>
+                            <div className="delete-wrapper">
+                                <button disabled={true} onClick={() => {console.log('Login first!')}}>{col}</button>
+                            </div>
+                        </td>
+                    )
+                }
             }
-        } else if (col === "Delete") {
+        } else if (col === "Delete" || col === "Archive") {
             return (
                 <td key={String(item[col]) + String(col)}>
                     <div className="delete-wrapper">
@@ -103,7 +123,7 @@ function ModifyItems({ entries, columns, editting, editCols, url}) {
             <div>
                 <div className="add-items-wrapper">
                     <Table
-                        columns={columns.concat(["Delete"])}
+                        columns={columns}
                         shown={entries}
                         rowColoringLogic={rowColor}
                         cellFunc={cellFunc}/>
