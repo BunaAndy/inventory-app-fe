@@ -122,12 +122,12 @@ function ModifyItems({ entries, columns, editting, editCols, url}) {
         return (
             <div>
                 <div className="add-items-wrapper">
+                    <button onClick={(event) => {modifyItems.mutate({'Entries': Object.values(changed)});deleteItems.mutate({'Entries': deleted})}}>Submit</button>
                     <Table
                         columns={columns}
                         shown={entries}
                         rowColoringLogic={rowColor}
                         cellFunc={cellFunc}/>
-                    <button onClick={(event) => {modifyItems.mutate({'Entries': Object.values(changed)});deleteItems.mutate({'Entries': deleted})}}>Submit</button>
                 </div>
             </div>
         )

@@ -41,8 +41,7 @@ function AddProject({ changeAdding }) {
     } else {
         return (
             <div className="add-project-wrapper">
-                <button onClick={changeAdding()}>Back</button>
-                <div style={{'height': '70px', 'width': '100%'}}></div>
+                <div style={{'height': '10px', 'width': '100%'}}></div>
                 <Form schema={project_schema} validator={validator} onSubmit={onSubmit} />
             </div>
         )

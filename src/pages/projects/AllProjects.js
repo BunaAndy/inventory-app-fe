@@ -30,7 +30,7 @@ function AllProjects() {
             setEntries(data['entries']);
             setShown(data['entries'])
             setProjectName(data['projectName'])
-            setColumns(data['columns']);
+            setColumns(data['columns'].filter((col) => {return col !== 'Bill Of Materials Added'}));
         })
     )
 
@@ -67,8 +67,7 @@ function AllProjects() {
             return (
                 <div>
                     <div style={{'height': '10px', 'width': '100%'}}/>
-                    <button onClick={setAdding(false)}>Back</button>
-                    <div style={{'height': '70px', 'width': '100%'}}/>
+                    <button onClick={() => {setAdding(false)}}>Back</button>
                     <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
                     </div>
@@ -80,8 +79,7 @@ function AllProjects() {
             return (
                 <div>
                     <div style={{'height': '10px', 'width': '100%'}}/>
-                    <button onClick={setEditting(false)}>Back</button>
-                    <div style={{'height': '70px', 'width': '100%'}}/>
+                    <button onClick={() => {setEditting(false)}}>Back</button>
                     <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
                     </div>
