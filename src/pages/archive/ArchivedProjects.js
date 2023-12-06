@@ -1,7 +1,7 @@
 import { React, useState } from "react"
 import './ArchivedProjects.css';
 import { api_url } from "../../resources/constants";
-import { useRequest, Methods } from "../../util/QueryHandler"
+import { useRequest, Methods, useMutate } from "../../util/QueryHandler"
 import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
 
@@ -26,10 +26,27 @@ function ArchivedProjects() {
             setColumns(data['columns']);
         })
     )
+    const downloadQuery = useMutate(
+        String(api_url) + `/get_archived_csv`,
+        undefined,
+        Methods.Post,
+        ['download'],
+        ((data) => {
+            console.log(data)
+        })
+    )
+
+    function downloadLink(item) {
+        data = {
+            'Project Name': item['Project Name'],
+            'Project Number': item['Project Number']
+        }
+        downloadQuery.mutate(data)
+    }
 
     function cellFunc(item, col) {
         return (
-            <td key={String(item[col]) + String(col)} className="clickableCell">
+            <td key={String(item[col]) + String(col)} className="clickableCell" onClick={() => {downloadLink(item)}}>
                 <div style={{width: "100%", height: "100%"}}>
                     {item[col]}
                 </div>
