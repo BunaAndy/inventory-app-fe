@@ -37,7 +37,7 @@ function ArchivedProjects() {
     )
 
     function downloadLink(item) {
-        data = {
+        var data = {
             'Project Name': item['Project Name'],
             'Project Number': item['Project Number']
         }
