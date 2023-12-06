@@ -1,11 +1,9 @@
 import { React, useState } from "react"
-import './AllProjects.css';
+import './ArchivedProjects.css';
 import { api_url } from "../../resources/constants";
 import { useRequest, Methods } from "../../util/QueryHandler"
 import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
-import AddProject from "./AddProject";
-import ModifyItems from "../items/ModifyItems";
 
 function ArchivedProjects() {
     // Setting up state and variables
