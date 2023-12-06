@@ -27,7 +27,7 @@ function ArchivedProjects() {
         })
     )
     const downloadQuery = useMutate(
-        String(api_url) + `/get_archived_csv`,
+        String(api_url) + `/download_archived_csv`,
         undefined,
         Methods.Post,
         ['download'],
@@ -46,8 +46,8 @@ function ArchivedProjects() {
 
     function cellFunc(item, col) {
         return (
-            <td key={String(item[col]) + String(col)} className="clickableCell" onClick={() => {downloadLink(item)}}>
-                <div style={{width: "100%", height: "100%"}}>
+            <td key={String(item[col]) + String(col)} className="clickableCell">
+                <div style={{width: "100%", height: "100%"}} onClick={() => {console.log('click');downloadLink(item)}}>
                     {item[col]}
                 </div>
             </td>
