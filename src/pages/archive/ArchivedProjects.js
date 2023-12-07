@@ -1,7 +1,7 @@
 import { React, useState } from "react"
 import './ArchivedProjects.css';
 import { api_url } from "../../resources/constants";
-import { useRequest, Methods, useMutate } from "../../util/QueryHandler"
+import { useRequest, Methods } from "../../util/QueryHandler"
 import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
 
