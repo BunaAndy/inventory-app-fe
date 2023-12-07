@@ -183,7 +183,7 @@ function ProjectDisplay() {
                         sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
                         rowColoringLogic={rowColor}/>
                     <div style={{'height': '50px', 'width': '100%'}}></div>
-                    {BOM ? <></> : <BOMImporter projectNumber={projectNumber} refresh={() => {projectQuery.refetch()}}/>}
+                    <BOMImporter projectNumber={projectNumber} bom={BOM}/>
                 </div>
             )
         }
