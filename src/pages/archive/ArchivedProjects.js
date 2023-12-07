@@ -30,7 +30,7 @@ function ArchivedProjects() {
     function cellFunc(item, col) {
         return (
             <td key={String(item[col]) + String(col)} className="clickableCell">
-                <a href={api_url + '/download_archived_csv/brokend' + item['Project Number'] + item['Project Name'] + '.csv'}>
+                <a href={api_url + '/download_archived_csv/' + item['Project Number'] + item['Project Name'] + '.csv'}>
                     <div style={{width: "100%", height: "100%"}}>
                         {item[col]}
                     </div>
