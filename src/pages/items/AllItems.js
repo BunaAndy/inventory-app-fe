@@ -52,12 +52,14 @@ function AllItems() {
             return (
                 <div>
                     <div style={{'height': '10px', 'width': '100%'}}/>
+                    <button onClick={setEditting(false)}>Back</button>
+                    <div style={{'height': '70px', 'width': '100%'}}/>
                     <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
                     </div>
                     <ModifyItems
                         entries={entries}
-                        columns={columns}
+                        columns={columns.concat(["Delete"])}
                         editting={() => {setEditting(false);itemsQuery.refetch()}}
                         editCols={{'Barcode': 'string', 'Catalog': 'string'}}
                         url={'all_items'}/>

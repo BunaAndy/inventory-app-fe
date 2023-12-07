@@ -21,6 +21,9 @@ function Navbar() {
                     <div className='menuButton'>
                         <Link to="/projects">Projects</Link>
                     </div>
+                    <div className='menuButton'>
+                        <Link to="/archives">Archives</Link>
+                    </div>
                 </div>
                 <div className='menuButton'>
                     {token ? 
