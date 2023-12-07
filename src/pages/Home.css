@@ -7,7 +7,7 @@
 
 .navWrapper {
     height: fit-content;
-    /* width: 80%; */
+    width: 80%;
     min-width: fit-content;
     max-width: calc(fit-content + 20%);
     margin-top: 30px;
