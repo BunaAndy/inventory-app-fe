@@ -22,6 +22,11 @@ function Home() {
                         All Items
                     </div>
                 </Link>
+                <Link to='/archives'>
+                    <div className='navButtonWrapper'>
+                        Archived Projects
+                    </div>
+                </Link>
             </div>
             <div style={{'height': '70px', 'width': '100%'}}></div>
         </div>

@@ -26,30 +26,15 @@ function ArchivedProjects() {
             setColumns(data['columns']);
         })
     )
-    const downloadQuery = useMutate(
-        String(api_url) + `/download_archived_csv`,
-        undefined,
-        Methods.Post,
-        ['download'],
-        ((data) => {
-            console.log(data)
-        })
-    )
-
-    function downloadLink(item) {
-        var data = {
-            'Project Name': item['Project Name'],
-            'Project Number': item['Project Number']
-        }
-        downloadQuery.mutate(data)
-    }
 
     function cellFunc(item, col) {
         return (
             <td key={String(item[col]) + String(col)} className="clickableCell">
-                <div style={{width: "100%", height: "100%"}} onClick={() => {console.log('click');downloadLink(item)}}>
-                    {item[col]}
-                </div>
+                <a href={api_url + '/download_archived_csv/brokend' + item['Project Number'] + item['Project Name'] + '.csv'}>
+                    <div style={{width: "100%", height: "100%"}}>
+                        {item[col]}
+                    </div>
+                </a>
             </td>
         )
     }
