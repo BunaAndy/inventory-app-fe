@@ -105,7 +105,7 @@ function ProjectDisplay() {
             return (
                 <div>
                     <div style={{'height': '10px', 'width': '100%'}}/>
-                    <button onClick={setAdding(false)}>Back</button>
+                    <button onClick={() => setAdding(false)}>Back</button>
                     <div style={{'height': '70px', 'width': '100%'}}/>
                     <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
@@ -121,7 +121,7 @@ function ProjectDisplay() {
             return (
                 <div>
                     <div style={{'height': '10px', 'width': '100%'}}/>
-                    <button onClick={setEditting(false)}>Back</button>
+                    <button onClick={() => setEditting(false)}>Back</button>
                     <div style={{'height': '70px', 'width': '100%'}}/>
                     <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
@@ -142,6 +142,7 @@ function ProjectDisplay() {
                     <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
                     </div>
+                    <button onClick={() => setPulling(false)}>Back</button>
                     <PullFromStock
                         entries={entries}
                         columns={columns}
