@@ -8,13 +8,11 @@ import { filterList, sortList } from "../../util/ListFunctions";
 import AddProjectItems from "./AddProjectItems";
 import ModifyItems from "../items/ModifyItems";
 import PullFromStock from "../items/PullFromStock";
-import { useLogin } from "../Login";
 import ExportCSV from "../../components/ExportCSV";
 import BOMImporter from "../../components/BOMImporter";
 
 function ProjectDisplay() {
     // Setting up state and variables
-    const checkLogin = useLogin()
     const location = useLocation();
     const [adding, setAdding] = useState(false)
     const [editting, setEditting] = useState(false)
@@ -166,10 +164,10 @@ function ProjectDisplay() {
                     </div>
                     <div className="tableButtons">
                         <div className="edittingButtons">
-                            <button onClick={() => {checkLogin(); setAdding(true)}}>Add Items</button>
-                            <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Items</button>
+                            <button onClick={() => {setAdding(true)}}>Add Items</button>
+                            <button onClick={() => {setEditting(true)}}>Edit Items</button>
                             {(projectNumber === "Inventory") ? <></> :
-                            <button onClick={() => {checkLogin(); setPulling(true)}}>Pull from Stock</button>}
+                            <button onClick={() => {setPulling(true)}}>Pull from Stock</button>}
                             {coloringEnable()}
                         </div>
                         <div className="exportButtons">
