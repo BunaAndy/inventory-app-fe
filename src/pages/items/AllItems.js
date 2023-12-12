@@ -50,7 +50,7 @@ function AllItems() {
             return (
                 <div>
                     <div style={{'height': '10px', 'width': '100%'}}/>
-                    <button onClick={setEditting(false)}>Back</button>
+                    <button onClick={() => setEditting(false)}>Back</button>
                     <div style={{'height': '70px', 'width': '100%'}}/>
                     <div className="tableTitle">
                         <div className="projectTitle">{projectName}</div>
