@@ -182,6 +182,7 @@ function ProjectDisplay() {
                         rowColoringLogic={rowColor}/>
                     <div style={{'height': '50px', 'width': '100%'}}></div>
                     <BOMImporter projectNumber={projectNumber} bom={BOM}/>
+                    <div style={{'height': '50px', 'width': '100%'}}></div>
                 </div>
             )
         }
