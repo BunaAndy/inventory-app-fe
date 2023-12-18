@@ -10,7 +10,7 @@ function BOMImporter({ projectNumber, bom}) {
     const url = bom ? String(api_url) + `/reupload_BOM?projectNumber=${projectNumber}` : String(api_url) + `/upload_BOM?projectNumber=${projectNumber}`
 
     const uploadBOM = useMutate(
-        String(api_url) + `/upload_BOM?projectNumber=${projectNumber}`,
+        url,
         Methods.Post,
         ['items'],
         ((data) => {
