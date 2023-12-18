@@ -30,6 +30,21 @@ function AllItems() {
         })
     )
 
+    const columnWidths = {
+        'Barcode': {
+            'width': '17%'
+        },
+        'Name': {
+            'width': '50%'
+        },
+        'Catalog': {
+            'width': '17%'
+        },
+        'Manufacturer': {
+            'width': '16%'
+        }
+    }
+
     // Rendering the page based on data
     if(itemsQuery.isLoading) {
         // If Loading:
@@ -88,7 +103,8 @@ function AllItems() {
                     <Table
                         columns={columns}
                         shown={shown}
-                        sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}/>
+                        sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
+                        columnwidths={columnWidths}/>
                 </div>
             )
         }

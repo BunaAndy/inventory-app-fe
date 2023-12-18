@@ -81,6 +81,27 @@ function ProjectDisplay() {
             setColumns(cols);
         })
     )
+
+    const columnWidths = {
+        'Barcode': {
+            'width': '10%'
+        },
+        'Name': {
+            'width': '45%'
+        },
+        'Quantity': {
+            'width': '10%'
+        },
+        'Quantity Needed': {
+            'width': '10%'
+        },
+        'Catalog': {
+            'width': '10%'
+        },
+        'Manufacturer': {
+            'width': '15%'
+        }
+    }
     
     // Rendering the page based on data
     if(projectQuery.isLoading) {
@@ -180,7 +201,8 @@ function ProjectDisplay() {
                         columns={columns}
                         shown={shown}
                         sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
-                        rowColoringLogic={rowColor}/>
+                        rowColoringLogic={rowColor}
+                        columnwidths={columnWidths}/>
                     <div style={{'height': '50px', 'width': '100%'}}></div>
                     <BOMImporter projectNumber={projectNumber} bom={BOM}/>
                     <div style={{'height': '50px', 'width': '100%'}}></div>
