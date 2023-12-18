@@ -7,11 +7,9 @@ import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
 import AddProject from "./AddProject";
 import ModifyItems from "../items/ModifyItems";
-import { useLogin } from "../Login";
 
 function AllProjects() {
     // Setting up state and variables
-    const checkLogin = useLogin()
     const [adding, setAdding] = useState(false)
     const [editting, setEditting] = useState(false)
     const [entries, setEntries] = useState([]);
@@ -104,8 +102,8 @@ function AllProjects() {
                         </div>
                     </div>
                     <div>
-                        <button onClick={() => {checkLogin(); setAdding(true)}}>Add Projects</button>
-                        <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Projects</button>
+                        <button onClick={() => {setAdding(true)}}>Add Projects</button>
+                        <button onClick={() => {setEditting(true)}}>Edit Projects</button>
                     </div>
                     <div style={{'height': '5px', 'width': '100%'}}/>
                     <Table

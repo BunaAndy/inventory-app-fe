@@ -5,11 +5,9 @@ import { useRequest, Methods } from "../../util/QueryHandler"
 import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
 import ModifyItems from "./ModifyItems";
-import { useLogin } from "../Login";
 
 function AllItems() {
     // Setting up state and variables
-    const checkLogin = useLogin()
     const [entries, setEntries] = useState([]);
     const [shown, setShown] = useState([]);
     const [projectName, setProjectName] = useState('');
@@ -77,7 +75,7 @@ function AllItems() {
                             <input name="myInput" className="searchBox" onChange={(event) => {filterList(entries, setShown, event.target.value, columns)}}/>
                         </div>
                     </div>
-                    <button onClick={() => {checkLogin(); setEditting(true)}}>Edit Items</button>
+                    <button onClick={() => {setEditting(true)}}>Edit Items</button>
                     <div style={{'height': '5px', 'width': '100%'}}/>
                     <Table
                         columns={columns}

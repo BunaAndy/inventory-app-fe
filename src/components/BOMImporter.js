@@ -2,9 +2,12 @@ import { React, useState } from "react"
 import {ExcelRenderer} from 'react-excel-renderer';
 import { useMutate, Methods } from "../util/QueryHandler";
 import { api_url } from "../resources/constants";
+import { useLoggedIn } from "../pages/Login";
 
-function BOMImporter({ projectNumber, refresh}) {
+function BOMImporter({ projectNumber, bom}) {
     const [file, setFile] = useState()
+    const checkLogin = useLoggedIn()
+    const url = bom ? String(api_url) + `/reupload_BOM?projectNumber=${projectNumber}` : String(api_url) + `/upload_BOM?projectNumber=${projectNumber}`
 
     const uploadBOM = useMutate(
         String(api_url) + `/upload_BOM?projectNumber=${projectNumber}`,
@@ -55,21 +58,26 @@ function BOMImporter({ projectNumber, refresh}) {
 
     var regex = /^[^\d]*(\d+)/
 
-    return (
-        <div>
-            <span>
+    if (bom && !checkLogin()) {
+        return <></>
+    } else {
+        return (
+            <div>
+                <span>
+                    <div style={{'height': '10px', 'width': '100%'}}></div>
+                    <div>Upload BOM as Excel file:</div>
+                    
+                    <input type="file"
+                        name="myFile"
+                        onChange={(event) => {let f = event.target.files[0]; setFile(f)}}
+                        accept=".xls,.xlsx"
+                        required={true}/>
+                </span>
                 <div style={{'height': '10px', 'width': '100%'}}></div>
-                <div>Upload BOM as Excel file:</div>
-                
-                <input type="file"
-                    name="myFile"
-                    onChange={(event) => {let f = event.target.files[0]; setFile(f)}}
-                    accept=".xls,.xlsx"/>
-            </span>
-            <div style={{'height': '10px', 'width': '100%'}}></div>
-            <button onClick={(event) => {uploadFile()}}>Upload</button>
-        </div>
-    )
+                <button onClick={(event) => {uploadFile()}}>Upload</button>
+            </div>
+        )
+    }
 }
 
 export default BOMImporter

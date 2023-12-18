@@ -80,23 +80,13 @@ function ModifyItems({ entries, columns, editting, editCols, url}) {
                     </td>
                 )
             } else if (col === "Archive") {
-                if (loggedIn()) {
-                    return (
-                        <td key={String(item[col]) + String(col)}>
-                            <div className="delete-wrapper">
-                                <button onClick={() => {setDeleted(deleted.concat([item]))}}>{col}</button>
-                            </div>
-                        </td>
-                    )
-                } else {
-                    return (
-                        <td key={String(item[col]) + String(col)}>
-                            <div className="delete-wrapper">
-                                <button disabled={true} onClick={() => {console.log('Login first!')}}>{col}</button>
-                            </div>
-                        </td>
-                    )
-                }
+                return (
+                    <td key={String(item[col]) + String(col)}>
+                        <div className="delete-wrapper">
+                            <button disabled={!loggedIn()} onClick={() => {setDeleted(deleted.concat([item]))}}>{col}</button>
+                        </div>
+                    </td>
+                )
             }
         } else if (col === "Delete" || col === "Archive") {
             return (

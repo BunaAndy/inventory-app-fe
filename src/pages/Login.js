@@ -79,7 +79,7 @@ export function useLogin() {
 export function useLoggedIn() {
     const {token} = useToken()
     const checkToken = () => {
-        return Boolean(token)
+        return token ? true : false
     }
     return checkToken
 }
