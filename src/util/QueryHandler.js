@@ -12,20 +12,24 @@ export function useRequest(url, body, method, key, dataFunc) {
     const navigate = useNavigate()
     function errorCatch(response) {
         var res = response
+        var json = res.json()
         if (!res.ok) {
+            console.log(String(json['error']))
+            console.log(String(json['message']))
             if (res.status === 401) {
-                // Call error here
+                navigate('/login')
+            } else if (res.status === 403) {
+                Logout()
                 navigate('/login')
             }
-            return res.json().then((err) => {throw new Error(String(err['error']) + ". " + String(err['message']))})
+            return json.then((err) => {throw new Error(String(err['error']) + ". " + String(err['message']))})
         }
-        return res.json()
+        return json
     }
     
     const query = useQuery({
         queryKey: key,
         queryFn: () => {
-
             var requestData = {
                 method: method,
                 headers: {
@@ -53,10 +57,8 @@ export function useMutate(url, method, key, dataFunc) {
             console.log(String(json['error']))
             console.log(String(json['message']))
             if (res.status === 401) {
-                // Call error here
                 navigate('/login')
-            } else if (res.status === 401) {
-                // Call error here
+            } else if (res.status === 403) {
                 Logout()
                 navigate('/login')
             }
