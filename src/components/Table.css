@@ -1,6 +1,6 @@
 .itemTable {
     border: 3px solid black;
-    width: 100%;
+    width: max(100%, 1000px);
     justify-content: space-evenly;
     table-layout: fixed;
 }
@@ -20,6 +20,7 @@ td {
     border: 1px solid black;
     text-align: left;
     text-indent: 10px;
+    overflow-wrap: break-word; 
 }
 
 .headerWrapper {

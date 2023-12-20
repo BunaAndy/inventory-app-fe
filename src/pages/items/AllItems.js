@@ -5,6 +5,7 @@ import { useRequest, Methods } from "../../util/QueryHandler"
 import Table from "../../components/Table";
 import { filterList, sortList } from "../../util/ListFunctions";
 import ModifyItems from "./ModifyItems";
+import CatalogImporter from "../../components/CatalogImporter";
 
 function AllItems() {
     // Setting up state and variables
@@ -28,6 +29,21 @@ function AllItems() {
             setColumns(data['columns']);
         })
     )
+
+    const columnWidths = {
+        'Barcode': {
+            'width': '17%'
+        },
+        'Name': {
+            'width': '50%'
+        },
+        'Catalog': {
+            'width': '17%'
+        },
+        'Manufacturer': {
+            'width': '16%'
+        }
+    }
 
     // Rendering the page based on data
     if(itemsQuery.isLoading) {
@@ -75,12 +91,20 @@ function AllItems() {
                             <input name="myInput" className="searchBox" onChange={(event) => {filterList(entries, setShown, event.target.value, columns)}}/>
                         </div>
                     </div>
-                    <button onClick={() => {setEditting(true)}}>Edit Items</button>
-                    <div style={{'height': '5px', 'width': '100%'}}/>
+                    <div className="tableButtons">
+                        <div className="edittingButtons">
+                            <button onClick={() => {setEditting(true)}}>Edit Items</button>
+                        </div>
+                        <div className="exportButtons">
+                            <CatalogImporter/>
+                        </div>
+                    </div>
+                    <div style={{'height': '10px', 'width': '100%'}}/>
                     <Table
                         columns={columns}
                         shown={shown}
-                        sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}/>
+                        sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
+                        columnwidths={columnWidths}/>
                 </div>
             )
         }

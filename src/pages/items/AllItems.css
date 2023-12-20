@@ -30,3 +30,14 @@ td {
     text-align: left;
     text-indent: 10px;
 }
+
+.tableButtons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.edittingButtons {
+    display: flex;
+    align-items: flex-end;
+}

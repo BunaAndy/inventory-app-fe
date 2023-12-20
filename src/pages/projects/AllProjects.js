@@ -44,6 +44,18 @@ function AllProjects() {
         )
     }
 
+    const columnWidths = {
+        'Project Number': {
+            'width': '30%'
+        },
+        'Project Name': {
+            'width': '40%'
+        },
+        'Date Created': {
+            'width': '30%'
+        }
+    }
+
     // Rendering the page based on data
     if(projectsQuery.isLoading) {
         // If Loading:
@@ -110,7 +122,8 @@ function AllProjects() {
                         columns={columns}
                         shown={shown}
                         sorting={(col, desc) => sortList(shown, setShown, entries, setEntries, col, desc)}
-                        cellFunc={cellFunc}/>
+                        cellFunc={cellFunc}
+                        columnwidths={columnWidths}/>
                     <div style={{'height': '70px', 'width': '100%'}}></div>
                 </div>
             )
