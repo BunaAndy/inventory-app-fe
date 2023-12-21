@@ -63,7 +63,7 @@ function CatalogImporter({ projectNumber }) {
         return (
             <div>
                 <span>
-                    <div>Upload BOM as Excel file:</div>
+                    <div>Upload Catalog as Excel file:</div>
                     <input type="file"
                         name="myFile"
                         onChange={(event) => {let f = event.target.files[0]; setFile(f)}}
