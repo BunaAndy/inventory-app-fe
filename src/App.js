@@ -27,7 +27,6 @@ function App() {
                     <Routes>
                         <Route index element={<Home />} />
                         <Route path="items" element={<AllItems />} />
-                        <Route path="add_project_items" element={<AddProjectItems />} />
                         <Route path="projects" element={<AllProjects />} />
                         <Route path="projects/*" element={<ProjectDisplay />} />
                         <Route path="archives" element={<ArchivedProjects />} />
