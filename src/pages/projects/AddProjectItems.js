@@ -63,7 +63,9 @@ function AddProjectItems({ projectNumber, changeAdding }) {
         });
         console.log(formData)
         incrementItems.mutate(formData)
-        addItems.mutate(formData)
+        const timer = setTimeout(() => {
+            addItems.mutate(formData)
+        }, 500);
         changeAdding()
     }
 
